@@ -8,263 +8,759 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0d0d0f; --bg2: #16161a; --bg3: #1e1e24;
-      --accent: #6c63ff; --accent2: #8b5cf6; --green: #22c55e;
-      --text: #f0f0f5; --text2: #9090a0; --border: #2a2a35; --card: #1a1a22;
+      --bg: #080810; --bg2: #0e0e1a; --bg3: #141422;
+      --accent: #7c6fff; --accent2: #a855f7; --cyan: #06b6d4;
+      --green: #22c55e; --pink: #ec4899;
+      --text: #f0f0f8; --text2: #7070a0; --border: #1e1e35; --card: #0f0f1e;
+      --neon1: #7c6fff; --neon2: #06b6d4; --neon3: #ec4899;
     }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; padding-bottom: 70px; overflow-x: hidden; }
-    .page { display: none; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh; padding-bottom: 72px; overflow-x: hidden;
+    }
+
+    /* ── NEON BACKGROUND ── */
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(124,111,255,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 35% at 60% 40%, rgba(168,85,247,0.05) 0%, transparent 70%);
+    }
+
+    /* Animated neon scan line */
+    body::after {
+      content: ''; position: fixed; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(124,111,255,0.6), rgba(6,182,212,0.8), rgba(124,111,255,0.6), transparent);
+      animation: scanline 6s linear infinite; z-index: 1; pointer-events: none;
+      box-shadow: 0 0 10px rgba(6,182,212,0.5), 0 0 30px rgba(124,111,255,0.3);
+    }
+    @keyframes scanline { 0% { top: -2px; } 100% { top: 100vh; } }
+
+    .page { display: none; position: relative; z-index: 2; }
     .page.active { display: block; }
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #12121a; border-top: 1px solid var(--border); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom, 0); }
-    .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0 8px; cursor: pointer; border: none; background: none; color: var(--text2); font-size: 10px; gap: 4px; transition: color 0.2s; }
+
+    /* ── NEON CARD ── */
+    .neon-card {
+      background: var(--card); border-radius: 16px; padding: 16px;
+      position: relative; overflow: hidden;
+      border: 1px solid transparent;
+      background-clip: padding-box;
+    }
+    .neon-card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 16px; padding: 1px;
+      background: linear-gradient(135deg, rgba(124,111,255,0.4), rgba(6,182,212,0.2), rgba(168,85,247,0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(8,8,16,0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(124,111,255,0.2);
+      display: flex; padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .bottom-nav::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon1), var(--neon2), var(--neon3), transparent);
+      animation: navglow 4s linear infinite;
+    }
+    @keyframes navglow {
+      0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+    }
+    .nav-btn {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      padding: 10px 0 8px; cursor: pointer; border: none; background: none;
+      color: var(--text2); font-size: 10px; gap: 4px; transition: all 0.25s; position: relative;
+    }
     .nav-btn.active { color: var(--accent); }
-    .nav-icon { font-size: 22px; line-height: 1; }
-    .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding: 24px 20px 20px; text-align: center; position: relative; overflow: hidden; }
-    .header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 60% 40%, rgba(108,99,255,0.15) 0%, transparent 60%); pointer-events: none; }
-    .logo { font-size: 26px; font-weight: 800; background: linear-gradient(135deg, #a78bfa, #6c63ff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .logo span { -webkit-text-fill-color: #38bdf8; }
-    .tagline { font-size: 12px; color: var(--text2); margin-top: 3px; }
-    .status-card { margin: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 12px; }
-    .status-icon { width: 42px; height: 42px; border-radius: 50%; background: rgba(239,68,68,0.12); border: 2px solid #ef4444; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-    .status-icon.active-sub { background: rgba(34,197,94,0.15); border-color: var(--green); }
-    .status-title { font-size: 14px; font-weight: 600; }
-    .status-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
-    .status-badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 4px 9px; border-radius: 20px; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); white-space: nowrap; }
-    .status-badge.on { background: rgba(34,197,94,0.15); color: var(--green); border-color: rgba(34,197,94,0.3); }
-    .features { display: flex; gap: 7px; margin: 0 14px 14px; }
-    .feature { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 11px 6px; text-align: center; }
-    .feature-icon { font-size: 20px; margin-bottom: 3px; }
-    .feature-text { font-size: 10px; color: var(--text2); line-height: 1.3; }
-    .page-title { font-size: 20px; font-weight: 800; padding: 20px 16px 12px; }
-    .tabs { display: flex; margin: 0 14px 14px; background: var(--bg3); border-radius: 12px; padding: 3px; gap: 3px; }
-    .tab { flex: 1; padding: 9px; text-align: center; border-radius: 9px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text2); border: none; background: transparent; }
-    .tab.active { background: var(--accent); color: #fff; }
+    .nav-btn.active::after {
+      content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 2px;
+      background: var(--accent); border-radius: 2px 2px 0 0;
+      box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent);
+    }
+    .nav-icon { font-size: 20px; line-height: 1; }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 24px 20px 20px; text-align: center; position: relative; overflow: hidden;
+      background: linear-gradient(180deg, rgba(124,111,255,0.08) 0%, transparent 100%);
+    }
+    .header-glow {
+      position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 80px;
+      background: radial-gradient(ellipse, rgba(124,111,255,0.4) 0%, transparent 70%);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow { 0%,100% { opacity:0.5; transform:translateX(-50%) scaleX(1); } 50% { opacity:1; transform:translateX(-50%) scaleX(1.2); } }
+    .logo {
+      font-size: 28px; font-weight: 900; letter-spacing: -0.5px; position: relative;
+      background: linear-gradient(135deg, #a78bfa 0%, var(--neon1) 40%, var(--neon2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 8px rgba(124,111,255,0.5));
+    }
+    .tagline { font-size: 11px; color: var(--text2); margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── STATUS ── */
+    .status-card {
+      margin: 12px 14px; padding: 14px; border-radius: 16px;
+      display: flex; align-items: center; gap: 12px;
+      background: var(--card); border: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .status-card::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(124,111,255,0.04), transparent);
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
+    .status-icon {
+      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(239,68,68,0.12); border: 2px solid #ef4444;
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+      box-shadow: 0 0 10px rgba(239,68,68,0.2);
+    }
+    .status-icon.on { background: rgba(34,197,94,0.12); border-color: var(--green); box-shadow: 0 0 10px rgba(34,197,94,0.25); }
+    .status-title { font-size: 14px; font-weight: 700; }
+    .status-sub { font-size: 11px; color: var(--text2); margin-top: 1px; }
+    .status-badge {
+      margin-left: auto; font-size: 10px; font-weight: 700; padding: 4px 10px;
+      border-radius: 20px; white-space: nowrap;
+      background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3);
+    }
+    .status-badge.on { background: rgba(34,197,94,0.1); color: var(--green); border-color: rgba(34,197,94,0.3); box-shadow: 0 0 8px rgba(34,197,94,0.15); }
+
+    /* ── FEATURES ── */
+    .features { display: flex; gap: 6px; margin: 0 14px 12px; }
+    .feature {
+      flex: 1; border-radius: 12px; padding: 10px 5px; text-align: center;
+      background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .feature::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,111,255,0.5), transparent);
+    }
+    .feature-icon { font-size: 18px; margin-bottom: 3px; }
+    .feature-text { font-size: 9px; color: var(--text2); line-height: 1.3; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      width: 100%; padding: 14px; border-radius: 13px; border: none;
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon1), var(--accent2));
+      color: #fff;
+      box-shadow: 0 0 20px rgba(124,111,255,0.4), 0 4px 15px rgba(124,111,255,0.2);
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transform: skewX(-20deg); animation: btn-shine 3s ease-in-out infinite;
+    }
+    @keyframes btn-shine { 0% { left: -60%; } 100% { left: 150%; } }
+    .btn-primary:active { transform: scale(0.97); box-shadow: none; }
+    .btn-outline {
+      background: rgba(124,111,255,0.08); border: 1px solid rgba(124,111,255,0.3);
+      color: var(--accent);
+    }
+    .btn-outline:active { background: rgba(124,111,255,0.15); }
+
+    /* ── PAGE TITLE ── */
+    .page-title {
+      font-size: 20px; font-weight: 800; padding: 20px 16px 14px;
+      background: linear-gradient(135deg, var(--text), #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex; margin: 0 14px 14px; background: var(--bg3);
+      border-radius: 12px; padding: 3px; gap: 3px;
+      border: 1px solid var(--border);
+    }
+    .tab {
+      flex: 1; padding: 9px; text-align: center; border-radius: 9px;
+      font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+      color: var(--text2); border: none; background: transparent;
+    }
+    .tab.active {
+      background: linear-gradient(135deg, var(--neon1), var(--accent2));
+      color: #fff;
+      box-shadow: 0 0 12px rgba(124,111,255,0.35);
+    }
+
+    /* ── PLAN CARDS ── */
     .plans { padding: 0 14px; display: none; }
     .plans.active { display: block; }
-    .plan-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; margin-bottom: 9px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+    .plan-card {
+      border-radius: 16px; padding: 14px; margin-bottom: 9px;
+      cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+      background: var(--card); border: 1px solid var(--border);
+    }
     .plan-card:active { transform: scale(0.98); }
-    .plan-card.recommended { border-color: var(--accent); background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(139,92,246,0.05)); }
-    .plan-card.recommended::before { content: 'ХИТ'; position: absolute; top: 9px; right: -18px; background: var(--accent); color: #fff; font-size: 9px; font-weight: 700; padding: 3px 26px; transform: rotate(35deg); letter-spacing: 0.5px; }
+    .plan-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,111,255,0.3), transparent);
+    }
+    .plan-card.recommended {
+      border-color: rgba(124,111,255,0.5);
+      background: linear-gradient(135deg, rgba(124,111,255,0.08), rgba(168,85,247,0.05));
+      box-shadow: 0 0 20px rgba(124,111,255,0.1), inset 0 0 20px rgba(124,111,255,0.02);
+    }
+    .plan-card.recommended::after {
+      content: 'ХИТ'; position: absolute; top: 10px; right: -16px;
+      background: linear-gradient(135deg, var(--neon1), var(--accent2));
+      color: #fff; font-size: 9px; font-weight: 800;
+      padding: 3px 24px; transform: rotate(35deg); letter-spacing: 1px;
+      box-shadow: 0 0 10px rgba(124,111,255,0.5);
+    }
     .plan-row { display: flex; align-items: center; justify-content: space-between; }
     .plan-name { font-size: 15px; font-weight: 700; }
-    .plan-price { font-size: 19px; font-weight: 800; color: var(--accent); }
+    .plan-price { font-size: 19px; font-weight: 900; color: var(--accent); text-shadow: 0 0 10px rgba(124,111,255,0.4); }
     .plan-meta { display: flex; gap: 10px; margin-top: 6px; }
     .plan-tag { font-size: 11px; color: var(--text2); }
-    .sub-highlight { background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(56,189,248,0.06)); border: 1px solid rgba(108,99,255,0.4); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+
+    /* ── SUBSCRIPTION ── */
+    .sub-highlight {
+      border-radius: 16px; padding: 16px; margin-bottom: 14px; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(124,111,255,0.1), rgba(6,182,212,0.05));
+      border: 1px solid rgba(124,111,255,0.35);
+      box-shadow: 0 0 25px rgba(124,111,255,0.08);
+    }
+    .sub-highlight::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon1), var(--neon2), transparent);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
     .sub-title { font-size: 17px; font-weight: 800; margin-bottom: 3px; }
     .sub-desc { font-size: 11px; color: var(--text2); margin-bottom: 12px; line-height: 1.5; }
     .sub-features { margin-bottom: 12px; }
-    .sub-feature { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text2); margin-bottom: 5px; }
-    .sub-feature::before { content: 'v'; color: var(--green); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+    .sub-feature { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+    .sub-feature::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; text-shadow: 0 0 6px rgba(34,197,94,0.5); }
     .sub-price-row { display: flex; align-items: baseline; gap: 7px; margin-bottom: 12px; }
-    .sub-price { font-size: 30px; font-weight: 900; background: linear-gradient(135deg, #a78bfa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sub-price {
+      font-size: 32px; font-weight: 900;
+      background: linear-gradient(135deg, #a78bfa, var(--neon2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 6px rgba(124,111,255,0.4));
+    }
     .sub-period { font-size: 13px; color: var(--text2); }
-    .btn { width: 100%; padding: 14px; border-radius: 13px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 4px 18px rgba(108,99,255,0.3); }
-    .btn-primary:active { transform: scale(0.97); box-shadow: none; }
-    .info-block { margin: 0 14px; background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 12px; font-size: 11px; color: var(--text2); line-height: 1.6; text-align: center; }
+
+    /* ── INFO BLOCK ── */
+    .info-block {
+      margin: 0 14px; background: rgba(6,182,212,0.05);
+      border: 1px solid rgba(6,182,212,0.15); border-radius: 12px;
+      padding: 12px; font-size: 11px; color: var(--text2); line-height: 1.6; text-align: center;
+    }
     .info-block strong { color: var(--text); }
-    .ref-hero { background: linear-gradient(135deg, #1a1a2e, #16213e); margin: 14px; border-radius: 18px; padding: 20px; text-align: center; }
-    .ref-emoji { font-size: 48px; margin-bottom: 10px; }
-    .ref-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+
+    /* ── PROMO ── */
+    .promo-block { margin: 14px; }
+    .promo-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .promo-row { display: flex; gap: 8px; }
+    .promo-input {
+      flex: 1; padding: 12px 14px; border-radius: 12px; font-size: 13px; font-weight: 700;
+      background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+      outline: none; letter-spacing: 1px; text-transform: uppercase;
+      transition: border-color 0.2s;
+    }
+    .promo-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(124,111,255,0.15); }
+    .promo-btn {
+      padding: 12px 18px; border-radius: 12px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--neon1), var(--accent2)); color: #fff;
+      font-size: 13px; font-weight: 700;
+      box-shadow: 0 0 12px rgba(124,111,255,0.3);
+    }
+    .promo-result { margin-top: 8px; font-size: 12px; padding: 8px 12px; border-radius: 10px; display: none; }
+    .promo-result.ok { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.25); display: block; }
+    .promo-result.err { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); display: block; }
+
+    /* ── SERVER STATUS ── */
+    .servers-block { margin: 12px 14px 0; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; position: relative; overflow: hidden; }
+    .servers-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--neon2), transparent); }
+    .servers-title { font-size: 12px; font-weight: 700; margin-bottom: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+    .server-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+    .server-chip {
+      font-size: 11px; padding: 5px 11px; border-radius: 20px;
+      background: rgba(34,197,94,0.08); color: var(--green);
+      border: 1px solid rgba(34,197,94,0.2);
+      box-shadow: 0 0 8px rgba(34,197,94,0.1);
+    }
+
+    /* ── REFERRAL ── */
+    .ref-hero {
+      margin: 14px; border-radius: 18px; padding: 22px; text-align: center;
+      background: linear-gradient(135deg, rgba(124,111,255,0.1), rgba(6,182,212,0.06));
+      border: 1px solid rgba(124,111,255,0.25); position: relative; overflow: hidden;
+    }
+    .ref-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(124,111,255,0.15) 0%, transparent 70%);
+    }
+    .ref-emoji { font-size: 44px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(124,111,255,0.4)); }
+    .ref-title { font-size: 19px; font-weight: 900; margin-bottom: 6px; }
     .ref-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
+    .ref-reward {
+      margin: 0 14px 12px; border-radius: 14px; padding: 14px;
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2);
+      box-shadow: 0 0 15px rgba(34,197,94,0.05);
+    }
+    .ref-reward-icon { font-size: 28px; filter: drop-shadow(0 0 6px rgba(34,197,94,0.4)); }
+    .ref-reward-title { font-size: 14px; font-weight: 800; color: var(--green); text-shadow: 0 0 8px rgba(34,197,94,0.3); }
+    .ref-reward-desc { font-size: 11px; color: var(--text2); margin-top: 2px; }
+    .ref-stats { display: flex; gap: 8px; margin: 0 14px 12px; }
+    .ref-stat { flex: 1; border-radius: 14px; padding: 14px; text-align: center; background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden; }
+    .ref-stat::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--neon1), var(--neon2)); box-shadow: 0 0 8px rgba(124,111,255,0.5); }
+    .ref-stat-num { font-size: 24px; font-weight: 900; color: var(--accent); text-shadow: 0 0 10px rgba(124,111,255,0.4); }
+    .ref-stat-label { font-size: 10px; color: var(--text2); margin-top: 2px; }
+    .ref-link-block { margin: 0 14px 12px; }
+    .ref-link-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ref-link-box {
+      display: flex; border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(124,111,255,0.3);
+      box-shadow: 0 0 12px rgba(124,111,255,0.1);
+      background: var(--bg3);
+    }
+    .ref-link-text { flex: 1; padding: 12px; font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ref-copy-btn {
+      padding: 12px 16px; color: #fff; font-size: 12px; font-weight: 700; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--neon1), var(--accent2));
+      transition: opacity 0.2s;
+    }
+    .ref-copy-btn:active { opacity: 0.8; }
     .ref-steps { margin: 0 14px 14px; }
-    .ref-step { display: flex; gap: 12px; align-items: flex-start; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 8px; }
-    .ref-num { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .ref-step { display: flex; gap: 12px; align-items: flex-start; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 13px; margin-bottom: 8px; }
+    .ref-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0; background: linear-gradient(135deg, var(--neon1), var(--accent2)); box-shadow: 0 0 10px rgba(124,111,255,0.4); }
     .ref-step-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
     .ref-step-desc { font-size: 11px; color: var(--text2); line-height: 1.4; }
-    .ref-reward { margin: 0 14px 14px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; }
-    .ref-reward-icon { font-size: 30px; }
-    .ref-reward-title { font-size: 14px; font-weight: 700; color: var(--green); }
-    .ref-reward-desc { font-size: 11px; color: var(--text2); margin-top: 2px; }
-    .ref-link-block { margin: 0 14px 14px; }
-    .ref-link-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    .ref-link-box { display: flex; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .ref-link-text { flex: 1; padding: 12px; font-size: 12px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ref-copy-btn { padding: 12px 16px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; border: none; cursor: pointer; }
-    .ref-stats { display: flex; gap: 8px; margin: 0 14px 14px; }
-    .ref-stat { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; text-align: center; }
-    .ref-stat-num { font-size: 24px; font-weight: 900; color: var(--accent); }
-    .ref-stat-label { font-size: 10px; color: var(--text2); margin-top: 2px; }
-    .profile-header { display: flex; flex-direction: column; align-items: center; padding: 28px 20px 20px; background: linear-gradient(135deg, #1a1a2e, #16213e); }
-    .avatar-ring { position: relative; width: 90px; height: 90px; margin-bottom: 14px; }
-    .avatar-ring::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(from 0deg, #6c63ff, #38bdf8, #a78bfa, #6c63ff); animation: spin 3s linear infinite; z-index: 0; }
-    .avatar-ring::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(from 180deg, #38bdf8, #6c63ff, #38bdf8); animation: spin 2s linear infinite reverse; z-index: 0; opacity: 0.5; }
+
+    /* ── PROFILE ── */
+    .profile-header {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 26px 20px 20px;
+      background: linear-gradient(180deg, rgba(124,111,255,0.1) 0%, transparent 100%);
+      position: relative; overflow: hidden;
+    }
+    .profile-header::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon1), var(--neon2), var(--neon3), transparent);
+      animation: navglow 3s ease-in-out infinite;
+    }
+    .avatar-ring { position: relative; width: 88px; height: 88px; margin-bottom: 14px; }
+    .avatar-ring-spin {
+      position: absolute; inset: -4px; border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--neon1), var(--neon2), var(--neon3), var(--neon1));
+      animation: spin 3s linear infinite;
+      box-shadow: 0 0 15px rgba(124,111,255,0.5), 0 0 30px rgba(6,182,212,0.3);
+    }
+    .avatar-ring-spin2 {
+      position: absolute; inset: -4px; border-radius: 50%;
+      background: conic-gradient(from 180deg, var(--neon3), var(--neon2), var(--neon1), var(--neon3));
+      animation: spin 2s linear infinite reverse;
+      opacity: 0.4;
+    }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .avatar-inner { position: absolute; inset: 4px; border-radius: 50%; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 36px; z-index: 1; overflow: hidden; }
+    .avatar-inner {
+      position: absolute; inset: 4px; border-radius: 50%;
+      background: var(--bg2); display: flex; align-items: center;
+      justify-content: center; font-size: 34px; z-index: 1; overflow: hidden;
+    }
     .avatar-inner img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-    .profile-name { font-size: 18px; font-weight: 800; text-align: center; }
+    .profile-name { font-size: 18px; font-weight: 800; }
     .profile-id { font-size: 12px; color: var(--text2); margin-top: 3px; }
-    .profile-sub-badge { margin-top: 10px; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-    .profile-sub-badge.active-s { background: rgba(34,197,94,0.15); color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .profile-sub-badge {
+      margin-top: 10px; padding: 6px 18px; border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+      background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3);
+    }
+    .profile-sub-badge.active-s {
+      background: rgba(34,197,94,0.1); color: var(--green); border-color: rgba(34,197,94,0.3);
+      box-shadow: 0 0 12px rgba(34,197,94,0.15);
+    }
     .profile-menu { margin: 14px; }
     .profile-menu-group { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 10px; }
-    .profile-menu-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; border: none; background: transparent; width: 100%; text-align: left; color: var(--text); transition: background 0.15s; }
-    .profile-menu-item:not(:last-child) { border-bottom: 1px solid var(--border); }
-    .profile-menu-item:active { background: rgba(255,255,255,0.04); }
-    .pmi-icon { font-size: 18px; width: 22px; text-align: center; flex-shrink: 0; }
-    .pmi-text { flex: 1; font-size: 14px; font-weight: 500; }
-    .pmi-arrow { color: var(--text2); font-size: 14px; }
-    .pmi-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(108,99,255,0.2); color: var(--accent); }
+    .pmi {
+      display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+      cursor: pointer; border: none; background: transparent; width: 100%;
+      text-align: left; color: var(--text); transition: background 0.15s;
+    }
+    .pmi:not(:last-child) { border-bottom: 1px solid var(--border); }
+    .pmi:active { background: rgba(124,111,255,0.06); }
+    .pmi-icon { font-size: 17px; width: 22px; text-align: center; flex-shrink: 0; }
+    .pmi-text { flex: 1; font-size: 13px; font-weight: 500; }
+    .pmi-arrow { color: var(--text2); font-size: 16px; }
+    .pmi-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(124,111,255,0.15); color: var(--accent); border: 1px solid rgba(124,111,255,0.25); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; align-items: flex-end; }
+    .modal-sheet {
+      width: 100%; background: var(--bg2); border-radius: 20px 20px 0 0;
+      max-height: 85vh; overflow-y: auto;
+      border-top: 1px solid rgba(124,111,255,0.3);
+      box-shadow: 0 -4px 30px rgba(124,111,255,0.15);
+    }
+    .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 12px auto 0; }
+    .modal-title { font-size: 17px; font-weight: 800; padding: 16px 20px 8px; background: linear-gradient(135deg, var(--text), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .modal-body { padding: 0 20px 30px; font-size: 12px; color: var(--text2); line-height: 1.8; }
+    .modal-body h3 { font-size: 13px; font-weight: 700; color: var(--text); margin: 14px 0 5px; }
+    .modal-close {
+      position: absolute; top: 14px; right: 18px;
+      background: rgba(255,255,255,0.06); border: none; color: var(--text2);
+      width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <div class="page active" id="page-home">
-    <div class="header">
-      <div class="logo">VPN <span>Itamani</span></div>
-      <div class="tagline">Быстрый · Надёжный · Без ограничений</div>
+
+<!-- ═══ ГЛАВНАЯ ═══ -->
+<div class="page active" id="page-home">
+  <div class="header">
+    <div class="header-glow"></div>
+    <div class="logo">VPN Itamani</div>
+    <div class="tagline">Быстрый · Надёжный · Без ограничений</div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-icon" id="homeStatusIcon">🔒</div>
+    <div>
+      <div class="status-title">Нет активной подписки</div>
+      <div class="status-sub">Выберите тариф на вкладке «Оплата»</div>
     </div>
-    <div class="status-card">
-      <div class="status-icon" id="homeStatusIcon">🔒</div>
-      <div><div class="status-title">Нет активной подписки</div><div class="status-sub">Выберите тариф на вкладке «Оплата»</div></div>
-      <div class="status-badge">Неактивно</div>
+    <div class="status-badge">Неактивно</div>
+  </div>
+
+  <div class="features">
+    <div class="feature"><div class="feature-icon">♾️</div><div class="feature-text">Безлимит<br>трафика</div></div>
+    <div class="feature"><div class="feature-icon">📱</div><div class="feature-text">До 10<br>устройств</div></div>
+    <div class="feature"><div class="feature-icon">⚡</div><div class="feature-text">Высокая<br>скорость</div></div>
+    <div class="feature"><div class="feature-icon">🌍</div><div class="feature-text">Серверы<br>EU/USA</div></div>
+  </div>
+
+  <div style="margin: 0 14px 12px;">
+    <button class="btn btn-primary" onclick="switchPage('payment')">🛒 Купить VPN</button>
+  </div>
+
+  <div class="servers-block">
+    <div class="servers-title">📡 Статус серверов</div>
+    <div class="server-chips">
+      <span class="server-chip">🟢 Германия</span>
+      <span class="server-chip">🟢 Нидерланды</span>
+      <span class="server-chip">🟢 Финляндия</span>
+      <span class="server-chip">🟢 США</span>
     </div>
-    <div class="features">
-      <div class="feature"><div class="feature-icon">♾️</div><div class="feature-text">Безлимит<br>трафика</div></div>
-      <div class="feature"><div class="feature-icon">📱</div><div class="feature-text">До 10<br>устройств</div></div>
-      <div class="feature"><div class="feature-icon">⚡</div><div class="feature-text">Высокая<br>скорость</div></div>
-      <div class="feature"><div class="feature-icon">🌍</div><div class="feature-text">Серверы<br>EU/USA</div></div>
+  </div>
+</div>
+
+<!-- ═══ ОПЛАТА ═══ -->
+<div class="page" id="page-payment">
+  <div class="page-title">💳 Оплата</div>
+
+  <div class="promo-block">
+    <div class="promo-label">Промокод</div>
+    <div class="promo-row">
+      <input class="promo-input" id="promoInput" type="text" placeholder="ВВЕДИТЕ КОД" maxlength="20" />
+      <button class="promo-btn" onclick="applyPromo()">Применить</button>
     </div>
-    <div style="margin: 0 14px;"><button class="btn btn-primary" onclick="switchPage('payment')">🛒 Купить VPN</button></div>
-    <div style="margin: 12px 14px 0; background: var(--bg3); border-radius: 16px; padding: 14px;">
-      <div style="font-size: 13px; font-weight: 700; margin-bottom: 10px;">📡 Статус серверов</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--green); border:1px solid rgba(34,197,94,0.2); padding:4px 10px; border-radius:20px;">🟢 Германия</span>
-        <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--green); border:1px solid rgba(34,197,94,0.2); padding:4px 10px; border-radius:20px;">🟢 Нидерланды</span>
-        <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--green); border:1px solid rgba(34,197,94,0.2); padding:4px 10px; border-radius:20px;">🟢 Финляндия</span>
-        <span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--green); border:1px solid rgba(34,197,94,0.2); padding:4px 10px; border-radius:20px;">🟢 США</span>
+    <div class="promo-result" id="promoResult"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('sub')">🔄 Подписка</button>
+    <button class="tab" onclick="switchTab('once')">📅 Разовая</button>
+  </div>
+
+  <div class="plans active" id="tab-sub">
+    <div class="sub-highlight">
+      <div class="sub-title">Автоподписка</div>
+      <div class="sub-desc">Платите раз — продлевается сама. Отмена в один клик.</div>
+      <div class="sub-features">
+        <div class="sub-feature">Автосписание каждый месяц</div>
+        <div class="sub-feature">Отмена в любой момент</div>
+        <div class="sub-feature">Не нужно помнить о сроках</div>
       </div>
+      <div class="sub-price-row"><div class="sub-price">250 ₽</div><div class="sub-period">/ месяц</div></div>
+      <button class="btn btn-primary" onclick="buyPlan('sub_month',250)">Оформить подписку</button>
+    </div>
+    <div class="info-block"><strong>Безлимит трафика · 10 устройств</strong><br>РКН блокирует — мы разблокируем. Всегда.</div>
+  </div>
+
+  <div class="plans" id="tab-once">
+    <div class="plan-card" onclick="buyPlan('day',20)"><div class="plan-row"><div class="plan-name">День</div><div class="plan-price">20 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
+    <div class="plan-card" onclick="buyPlan('week',100)"><div class="plan-row"><div class="plan-name">Неделя</div><div class="plan-price">100 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
+    <div class="plan-card recommended" onclick="buyPlan('month',300)"><div class="plan-row"><div class="plan-name">Месяц</div><div class="plan-price">300 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
+    <div class="plan-card" onclick="buyPlan('3month',825)"><div class="plan-row"><div class="plan-name">3 месяца</div><div class="plan-price">825 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −8%</div></div></div>
+    <div class="plan-card" onclick="buyPlan('6month',1575)"><div class="plan-row"><div class="plan-name">Полгода</div><div class="plan-price">1 575 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −12%</div></div></div>
+    <div class="plan-card" onclick="buyPlan('year',3000)"><div class="plan-row"><div class="plan-name">Год</div><div class="plan-price">3 000 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −17%</div></div></div>
+    <div class="info-block" style="margin:0;"><strong>Один платёж — один период</strong><br>Ничего не спишется автоматически</div>
+  </div>
+</div>
+
+<!-- ═══ РЕФЕРАЛЫ ═══ -->
+<div class="page" id="page-ref">
+  <div class="ref-hero">
+    <div class="ref-emoji">🎁</div>
+    <div class="ref-title">Зарабатывай с друзьями</div>
+    <div class="ref-desc">Приглашай друзей и получай 15% с каждой их покупки</div>
+  </div>
+
+  <div class="ref-reward">
+    <div class="ref-reward-icon">💰</div>
+    <div>
+      <div class="ref-reward-title">+15% с каждой покупки друга</div>
+      <div class="ref-reward-desc">Зачисляется на баланс сразу после оплаты</div>
     </div>
   </div>
 
-  <div class="page" id="page-payment">
-    <div class="page-title">💳 Оплата</div>
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('sub')">🔄 Подписка</button>
-      <button class="tab" onclick="switchTab('once')">📅 Разовая</button>
-    </div>
-    <div class="plans active" id="tab-sub">
-      <div class="sub-highlight">
-        <div class="sub-title">Автоподписка</div>
-        <div class="sub-desc">Платите раз — продлевается сама. Отмена в один клик.</div>
-        <div class="sub-features">
-          <div class="sub-feature">Автосписание каждый месяц</div>
-          <div class="sub-feature">Отмена в любой момент</div>
-          <div class="sub-feature">Не нужно помнить о сроках</div>
-        </div>
-        <div class="sub-price-row"><div class="sub-price">250 ₽</div><div class="sub-period">/ месяц</div></div>
-        <button class="btn btn-primary" onclick="buyPlan('sub_month',250)">Оформить подписку</button>
-      </div>
-      <div class="info-block"><strong>Безлимит трафика · 10 устройств</strong><br>РКН блокирует — мы разблокируем. Всегда.</div>
-    </div>
-    <div class="plans" id="tab-once">
-      <div class="plan-card" onclick="buyPlan('day',20)"><div class="plan-row"><div class="plan-name">День</div><div class="plan-price">20 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
-      <div class="plan-card" onclick="buyPlan('week',100)"><div class="plan-row"><div class="plan-name">Неделя</div><div class="plan-price">100 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
-      <div class="plan-card recommended" onclick="buyPlan('month',300)"><div class="plan-row"><div class="plan-name">Месяц</div><div class="plan-price">300 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
-      <div class="plan-card" onclick="buyPlan('3month',825)"><div class="plan-row"><div class="plan-name">3 месяца</div><div class="plan-price">825 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −8%</div></div></div>
-      <div class="plan-card" onclick="buyPlan('6month',1575)"><div class="plan-row"><div class="plan-name">Полгода</div><div class="plan-price">1 575 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −12%</div></div></div>
-      <div class="plan-card" onclick="buyPlan('year',3000)"><div class="plan-row"><div class="plan-name">Год</div><div class="plan-price">3 000 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −17%</div></div></div>
-      <div class="info-block" style="margin:0;"><strong>Один платёж — один период</strong><br>Ничего не спишется автоматически</div>
+  <div class="ref-stats">
+    <div class="ref-stat"><div class="ref-stat-num" id="refCount">0</div><div class="ref-stat-label">Приглашено</div></div>
+    <div class="ref-stat"><div class="ref-stat-num" id="refEarned">0 ₽</div><div class="ref-stat-label">Заработано</div></div>
+  </div>
+
+  <div class="ref-link-block">
+    <div class="ref-link-label">Ваша реферальная ссылка</div>
+    <div class="ref-link-box">
+      <div class="ref-link-text" id="refLink">https://t.me/vpnitamani_bot?start=ref_...</div>
+      <button class="ref-copy-btn" id="copyBtn" onclick="copyRef()">Копировать</button>
     </div>
   </div>
 
-  <div class="page" id="page-ref">
-    <div class="ref-hero">
-      <div class="ref-emoji">🎁</div>
-      <div class="ref-title">Зарабатывай с друзьями</div>
-      <div class="ref-desc">Приглашай друзей — получай бонусы за каждую их покупку</div>
+  <div class="ref-steps">
+    <div class="ref-step"><div class="ref-num">1</div><div><div class="ref-step-title">Поделитесь ссылкой</div><div class="ref-step-desc">Отправьте реферальную ссылку другу в любом мессенджере</div></div></div>
+    <div class="ref-step"><div class="ref-num">2</div><div><div class="ref-step-title">Друг покупает VPN</div><div class="ref-step-desc">Он переходит по вашей ссылке и оформляет любой тариф</div></div></div>
+    <div class="ref-step"><div class="ref-num">3</div><div><div class="ref-step-title">Вы получаете 15%</div><div class="ref-step-desc">15% от суммы его покупки мгновенно зачисляются на баланс</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ ПРОФИЛЬ ═══ -->
+<div class="page" id="page-profile">
+  <div class="profile-header">
+    <div class="avatar-ring">
+      <div class="avatar-ring-spin"></div>
+      <div class="avatar-ring-spin2"></div>
+      <div class="avatar-inner" id="avatarEl">👤</div>
     </div>
-    <div class="ref-reward">
-      <div class="ref-reward-icon">💰</div>
-      <div><div class="ref-reward-title">+20% с каждой покупки друга</div><div class="ref-reward-desc">Начисляется на баланс сразу после оплаты</div></div>
-    </div>
-    <div class="ref-stats">
-      <div class="ref-stat"><div class="ref-stat-num" id="refCount">0</div><div class="ref-stat-label">Приглашено</div></div>
-      <div class="ref-stat"><div class="ref-stat-num" id="refEarned">0 ₽</div><div class="ref-stat-label">Заработано</div></div>
-    </div>
-    <div class="ref-link-block">
-      <div class="ref-link-label">Ваша реферальная ссылка</div>
-      <div class="ref-link-box">
-        <div class="ref-link-text" id="refLink">https://t.me/vpnitamani_bot?start=ref_...</div>
-        <button class="ref-copy-btn" onclick="copyRef()">Копировать</button>
-      </div>
-    </div>
-    <div class="ref-steps">
-      <div class="ref-step"><div class="ref-num">1</div><div><div class="ref-step-title">Поделитесь ссылкой</div><div class="ref-step-desc">Отправьте реферальную ссылку другу в любом мессенджере</div></div></div>
-      <div class="ref-step"><div class="ref-num">2</div><div><div class="ref-step-title">Друг покупает VPN</div><div class="ref-step-desc">Он переходит по ссылке и оформляет любой тариф</div></div></div>
-      <div class="ref-step"><div class="ref-num">3</div><div><div class="ref-step-title">Вы получаете бонус</div><div class="ref-step-desc">20% от суммы его покупки зачисляется на ваш баланс</div></div></div>
-    </div>
+    <div class="profile-name" id="profileName">Загрузка...</div>
+    <div class="profile-id" id="profileId">ID: —</div>
+    <div class="profile-sub-badge" id="profileBadge">❌ Нет подписки</div>
   </div>
 
-  <div class="page" id="page-profile">
-    <div class="profile-header">
-      <div class="avatar-ring"><div class="avatar-inner" id="avatarEl">👤</div></div>
-      <div class="profile-name" id="profileName">Загрузка...</div>
-      <div class="profile-id" id="profileId">ID: —</div>
-      <div class="profile-sub-badge" id="profileBadge">❌ Нет подписки</div>
+  <div class="profile-menu">
+    <div class="profile-menu-group">
+      <button class="pmi" onclick="openPromo()"><span class="pmi-icon">🏷️</span><span class="pmi-text">Промокод</span><span class="pmi-arrow">›</span></button>
+      <button class="pmi"><span class="pmi-icon">📋</span><span class="pmi-text">Транзакции</span><span class="pmi-arrow">›</span></button>
     </div>
-    <div class="profile-menu">
-      <div class="profile-menu-group">
-        <button class="profile-menu-item"><span class="pmi-icon">🏷️</span><span class="pmi-text">Промокод</span><span class="pmi-arrow">›</span></button>
-        <button class="profile-menu-item"><span class="pmi-icon">📋</span><span class="pmi-text">Транзакции</span><span class="pmi-arrow">›</span></button>
-      </div>
-      <div class="profile-menu-group">
-        <button class="profile-menu-item" onclick="switchPage('ref')"><span class="pmi-icon">🎁</span><span class="pmi-text">Реферальная программа</span><span class="pmi-badge">+20%</span><span class="pmi-arrow">›</span></button>
-      </div>
-      <div class="profile-menu-group">
-        <button class="profile-menu-item"><span class="pmi-icon">❓</span><span class="pmi-text">Поддержка</span><span class="pmi-arrow">›</span></button>
-        <button class="profile-menu-item"><span class="pmi-icon">📄</span><span class="pmi-text">Публичная оферта</span><span class="pmi-arrow">›</span></button>
-        <button class="profile-menu-item"><span class="pmi-icon">🔒</span><span class="pmi-text">Политика конфиденциальности</span><span class="pmi-arrow">›</span></button>
-      </div>
+    <div class="profile-menu-group">
+      <button class="pmi" onclick="switchPage('ref')"><span class="pmi-icon">🎁</span><span class="pmi-text">Реферальная программа</span><span class="pmi-badge">+15%</span><span class="pmi-arrow">›</span></button>
+    </div>
+    <div class="profile-menu-group">
+      <button class="pmi" onclick="openSupport()"><span class="pmi-icon">❓</span><span class="pmi-text">Поддержка</span><span class="pmi-arrow">›</span></button>
+      <button class="pmi" onclick="openModal('offer')"><span class="pmi-icon">📄</span><span class="pmi-text">Публичная оферта</span><span class="pmi-arrow">›</span></button>
+      <button class="pmi" onclick="openModal('privacy')"><span class="pmi-icon">🔒</span><span class="pmi-text">Политика конфиденциальности</span><span class="pmi-arrow">›</span></button>
     </div>
   </div>
+</div>
 
-  <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="switchPage('home')" id="nav-home"><span class="nav-icon">🏠</span>Главная</button>
-    <button class="nav-btn" onclick="switchPage('payment')" id="nav-payment"><span class="nav-icon">💳</span>Оплата</button>
-    <button class="nav-btn" onclick="switchPage('ref')" id="nav-ref"><span class="nav-icon">🎁</span>Рефералы</button>
-    <button class="nav-btn" onclick="switchPage('profile')" id="nav-profile"><span class="nav-icon">👤</span>Профиль</button>
-  </nav>
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="switchPage('home')" id="nav-home"><span class="nav-icon">🏠</span>Главная</button>
+  <button class="nav-btn" onclick="switchPage('payment')" id="nav-payment"><span class="nav-icon">💳</span>Оплата</button>
+  <button class="nav-btn" onclick="switchPage('ref')" id="nav-ref"><span class="nav-icon">🎁</span>Рефералы</button>
+  <button class="nav-btn" onclick="switchPage('profile')" id="nav-profile"><span class="nav-icon">👤</span>Профиль</button>
+</nav>
 
-  <script>
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.ready(); tg.expand();
-      tg.setHeaderColor('#0d0d0f'); tg.setBackgroundColor('#0d0d0f');
-      const user = tg.initDataUnsafe?.user;
-      if (user) {
-        document.getElementById('profileName').textContent = (user.first_name||'') + (user.last_name?' '+user.last_name:'');
-        document.getElementById('profileId').textContent = 'ID: ' + user.id;
-        if (user.photo_url) document.getElementById('avatarEl').innerHTML = '<img src="'+user.photo_url+'" alt="a">';
-        else document.getElementById('avatarEl').textContent = (user.first_name||'?')[0].toUpperCase();
-        document.getElementById('refLink').textContent = 'https://t.me/vpnitamani_bot?start=ref_'+user.id;
+<!-- ═══ MODAL: Публичная оферта ═══ -->
+<div class="modal-overlay" id="modal-offer" onclick="closeModal(event,'offer')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="position:relative;">
+      <div class="modal-title">📄 Публичная оферта</div>
+      <button class="modal-close" onclick="closeModalById('offer')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Настоящая Публичная оферта (далее — «Оферта») является официальным предложением индивидуального предпринимателя, именуемого далее «Исполнитель», заключить договор на оказание услуг доступа к VPN-сервису <strong>VPN Itamani</strong> на изложенных ниже условиях.</p>
+
+      <h3>1. Термины и определения</h3>
+      <p><strong>Сервис</strong> — программный комплекс VPN Itamani, обеспечивающий защищённый доступ к сети Интернет.<br>
+      <strong>Пользователь</strong> — физическое лицо, принявшее условия настоящей Оферты.<br>
+      <strong>Подписка</strong> — оплаченный период доступа к Сервису.</p>
+
+      <h3>2. Предмет договора</h3>
+      <p>Исполнитель предоставляет Пользователю доступ к VPN-сервису в течение оплаченного периода. Сервис обеспечивает шифрование интернет-трафика и смену IP-адреса.</p>
+
+      <h3>3. Стоимость и порядок оплаты</h3>
+      <p>Стоимость услуг определяется действующим прейскурантом, размещённым в интерфейсе приложения. Оплата производится через платёжные системы, интегрированные в Telegram-бот. Все цены указаны в рублях РФ и включают НДС.</p>
+
+      <h3>4. Условия использования</h3>
+      <p>Пользователь вправе использовать Сервис на устройствах до 10 (десяти) включительно. Передача доступа третьим лицам запрещена. Использование Сервиса в незаконных целях запрещено.</p>
+
+      <h3>5. Возврат денежных средств</h3>
+      <p>Возврат осуществляется в течение 24 часов с момента первой оплаты при условии, что Пользователь не использовал Сервис более 100 МБ трафика. Для возврата обратитесь в поддержку: <strong>@vpnitamani</strong>.</p>
+
+      <h3>6. Ограничение ответственности</h3>
+      <p>Исполнитель не несёт ответственности за перебои в работе Сервиса, вызванные действиями третьих лиц, форс-мажорными обстоятельствами или действиями регуляторов.</p>
+
+      <h3>7. Реферальная программа</h3>
+      <p>Пользователь получает 15% от суммы каждой покупки привлечённого им реферала. Вознаграждение зачисляется на баланс в системе и может быть использовано для оплаты подписки.</p>
+
+      <h3>8. Акцепт Оферты</h3>
+      <p>Оплата услуг означает полное и безоговорочное принятие условий настоящей Оферты.</p>
+
+      <h3>9. Контакты</h3>
+      <p>Служба поддержки: @vpnitamani в Telegram.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: Политика ═══ -->
+<div class="modal-overlay" id="modal-privacy" onclick="closeModal(event,'privacy')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="position:relative;">
+      <div class="modal-title">🔒 Политика конфиденциальности</div>
+      <button class="modal-close" onclick="closeModalById('privacy')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Настоящая Политика конфиденциальности описывает, какие данные собирает сервис <strong>VPN Itamani</strong>, как они используются и защищаются.</p>
+
+      <h3>1. Какие данные мы собираем</h3>
+      <p><strong>Данные Telegram:</strong> Telegram ID, имя пользователя, имя и фамилия (если указаны в профиле). Эти данные передаются автоматически при запуске Mini App.<br>
+      <strong>Платёжные данные:</strong> мы не хранем данные банковских карт — они обрабатываются платёжными системами напрямую.<br>
+      <strong>Технические данные:</strong> IP-адрес, тип устройства, время подключения — для работы VPN-сервиса.</p>
+
+      <h3>2. Как мы используем данные</h3>
+      <p>— Для предоставления доступа к VPN-сервису;<br>
+      — Для обработки платежей и управления подпиской;<br>
+      — Для работы реферальной программы;<br>
+      — Для технической поддержки пользователей;<br>
+      — Для предотвращения злоупотреблений сервисом.</p>
+
+      <h3>3. VPN и конфиденциальность</h3>
+      <p>Мы не ведём логи интернет-активности пользователей (посещённые сайты, запросы). Мы фиксируем только факт подключения и объём трафика для технических нужд и контроля лимитов.</p>
+
+      <h3>4. Передача данных третьим лицам</h3>
+      <p>Мы не продаём и не передаём персональные данные третьим лицам, за исключением платёжных систем (для обработки оплаты) и хостинг-провайдеров (для работы серверов).</p>
+
+      <h3>5. Хранение данных</h3>
+      <p>Данные хранятся на защищённых серверах в Европе. Срок хранения — до момента удаления аккаунта или в течение 1 года после последнего использования.</p>
+
+      <h3>6. Ваши права</h3>
+      <p>Вы вправе запросить удаление своих данных, обратившись в поддержку: <strong>@vpnitamani</strong>. Запрос выполняется в течение 30 дней.</p>
+
+      <h3>7. Безопасность</h3>
+      <p>Все соединения шифруются по протоколу VLESS+Reality. Мы регулярно обновляем серверное ПО и проводим аудит безопасности.</p>
+
+      <h3>8. Контакты</h3>
+      <p>По вопросам конфиденциальности: @vpnitamani в Telegram.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.ready(); tg.expand();
+    tg.setHeaderColor('#080810'); tg.setBackgroundColor('#080810');
+    const user = tg.initDataUnsafe?.user;
+    if (user) {
+      document.getElementById('profileName').textContent =
+        (user.first_name || '') + (user.last_name ? ' ' + user.last_name : '');
+      document.getElementById('profileId').textContent = 'ID: ' + user.id;
+      if (user.photo_url) {
+        document.getElementById('avatarEl').innerHTML = `<img src="${user.photo_url}" alt="">`;
+      } else {
+        document.getElementById('avatarEl').textContent = (user.first_name || '?')[0].toUpperCase();
       }
+      document.getElementById('refLink').textContent =
+        `https://t.me/vpnitamani_bot?start=ref_${user.id}`;
+    }
+  } else {
+    document.getElementById('profileName').textContent = 'Владислав';
+    document.getElementById('profileId').textContent = 'ID: 1989200344';
+    document.getElementById('refLink').textContent = 'https://t.me/vpnitamani_bot?start=ref_1989200344';
+  }
+
+  function switchPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.getElementById('nav-' + page).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) =>
+      t.classList.toggle('active', (i === 0 && tab === 'sub') || (i === 1 && tab === 'once')));
+    document.getElementById('tab-sub').classList.toggle('active', tab === 'sub');
+    document.getElementById('tab-once').classList.toggle('active', tab === 'once');
+  }
+
+  function buyPlan(plan, price) {
+    if (tg) tg.sendData(JSON.stringify({ action: 'buy', plan, price }));
+    else alert('Тариф: ' + plan + ' — ' + price + '₽\n(Открой в Telegram)');
+  }
+
+  function applyPromo() {
+    const code = document.getElementById('promoInput').value.trim().toUpperCase();
+    const result = document.getElementById('promoResult');
+    if (code === 'ITAMANI') {
+      result.className = 'promo-result ok';
+      result.textContent = '🎉 Промокод применён! +1 день VPN бесплатно';
+      if (tg) tg.sendData(JSON.stringify({ action: 'promo', code }));
+    } else if (code === '') {
+      result.className = 'promo-result err';
+      result.textContent = '⚠️ Введите промокод';
     } else {
-      document.getElementById('profileName').textContent = 'Владислав';
-      document.getElementById('profileId').textContent = 'ID: 1989200344';
-      document.getElementById('refLink').textContent = 'https://t.me/vpnitamani_bot?start=ref_1989200344';
+      result.className = 'promo-result err';
+      result.textContent = '❌ Промокод недействителен';
     }
-    function switchPage(page) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('page-'+page).classList.add('active');
-      document.getElementById('nav-'+page).classList.add('active');
-      window.scrollTo(0,0);
+  }
+
+  function openPromo() {
+    switchPage('payment');
+    setTimeout(() => document.getElementById('promoInput').focus(), 300);
+  }
+
+  function copyRef() {
+    const link = document.getElementById('refLink').textContent;
+    const btn = document.getElementById('copyBtn');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(link).then(() => {
+        btn.textContent = '✓ Скопировано!';
+        setTimeout(() => btn.textContent = 'Копировать', 2500);
+      });
     }
-    function switchTab(tab) {
-      document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active',(i===0&&tab==='sub')||(i===1&&tab==='once')));
-      document.getElementById('tab-sub').classList.toggle('active', tab==='sub');
-      document.getElementById('tab-once').classList.toggle('active', tab==='once');
-    }
-    function buyPlan(plan, price) {
-      if (tg) tg.sendData(JSON.stringify({action:'buy',plan,price}));
-      else alert('Тариф: '+plan+' — '+price+'\u20bd\n(Открой в Telegram)');
-    }
-    function copyRef() {
-      const link = document.getElementById('refLink').textContent;
-      const btn = document.querySelector('.ref-copy-btn');
-      if (navigator.clipboard) navigator.clipboard.writeText(link).then(() => { btn.textContent='✓ Скопировано'; setTimeout(()=>btn.textContent='Копировать',2000); });
-    }
-  </script>
+  }
+
+  function openSupport() {
+    if (tg) tg.openTelegramLink('https://t.me/vpnitamani');
+    else window.open('https://t.me/vpnitamani', '_blank');
+  }
+
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModalById(id) {
+    document.getElementById('modal-' + id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModal(e, id) {
+    if (e.target === document.getElementById('modal-' + id)) closeModalById(id);
+  }
+
+  document.getElementById('promoInput').addEventListener('input', function() {
+    this.value = this.value.toUpperCase();
+  });
+</script>
 </body>
 </html>
