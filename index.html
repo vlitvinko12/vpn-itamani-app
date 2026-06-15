@@ -19,8 +19,6 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       min-height: 100vh; padding-bottom: 72px; overflow-x: hidden;
     }
-
-    /* ── NEON BACKGROUND ── */
     body::before {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
@@ -28,18 +26,12 @@
         radial-gradient(ellipse 40% 30% at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 70%),
         radial-gradient(ellipse 50% 35% at 60% 40%, rgba(168,85,247,0.05) 0%, transparent 70%);
     }
-
-    /* Animated neon scan line */
-
     .page { display: none; position: relative; z-index: 2; }
     .page.active { display: block; }
-
-    /* ── NEON CARD ── */
     .neon-card {
       background: var(--card); border-radius: 16px; padding: 16px;
       position: relative; overflow: hidden;
-      border: 1px solid transparent;
-      background-clip: padding-box;
+      border: 1px solid transparent; background-clip: padding-box;
     }
     .neon-card::before {
       content: ''; position: absolute; inset: 0; border-radius: 16px; padding: 1px;
@@ -47,8 +39,6 @@
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
     }
-
-    /* ── BOTTOM NAV ── */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
       background: rgba(8,8,16,0.95); backdrop-filter: blur(12px);
@@ -60,9 +50,7 @@
       background: linear-gradient(90deg, transparent, var(--neon1), var(--neon2), var(--neon3), transparent);
       animation: navglow 4s linear infinite;
     }
-    @keyframes navglow {
-      0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
-    }
+    @keyframes navglow { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
     .nav-btn {
       flex: 1; display: flex; flex-direction: column; align-items: center;
       padding: 10px 0 8px; cursor: pointer; border: none; background: none;
@@ -75,8 +63,6 @@
       box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent);
     }
     .nav-icon { font-size: 20px; line-height: 1; }
-
-    /* ── HEADER ── */
     .header {
       padding: 24px 20px 20px; text-align: center; position: relative; overflow: hidden;
       background: linear-gradient(180deg, rgba(124,111,255,0.08) 0%, transparent 100%);
@@ -95,8 +81,6 @@
       filter: drop-shadow(0 0 8px rgba(124,111,255,0.5));
     }
     .tagline { font-size: 11px; color: var(--text2); margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
-
-    /* ── STATUS ── */
     .status-card {
       margin: 12px 14px; padding: 14px; border-radius: 16px;
       display: flex; align-items: center; gap: 12px;
@@ -124,8 +108,6 @@
       background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3);
     }
     .status-badge.on { background: rgba(34,197,94,0.1); color: var(--green); border-color: rgba(34,197,94,0.3); box-shadow: 0 0 8px rgba(34,197,94,0.15); }
-
-    /* ── FEATURES ── */
     .features { display: flex; gap: 6px; margin: 0 14px 12px; }
     .feature {
       flex: 1; border-radius: 12px; padding: 10px 5px; text-align: center;
@@ -137,8 +119,6 @@
     }
     .feature-icon { font-size: 18px; margin-bottom: 3px; }
     .feature-text { font-size: 9px; color: var(--text2); line-height: 1.3; }
-
-    /* ── BUTTONS ── */
     .btn {
       width: 100%; padding: 14px; border-radius: 13px; border: none;
       font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
@@ -160,15 +140,11 @@
       color: var(--accent);
     }
     .btn-outline:active { background: rgba(124,111,255,0.15); }
-
-    /* ── PAGE TITLE ── */
     .page-title {
       font-size: 20px; font-weight: 800; padding: 20px 16px 14px;
       background: linear-gradient(135deg, var(--text), #a78bfa);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-
-    /* ── TABS ── */
     .tabs {
       display: flex; margin: 0 14px 14px; background: var(--bg3);
       border-radius: 12px; padding: 3px; gap: 3px;
@@ -181,11 +157,8 @@
     }
     .tab.active {
       background: linear-gradient(135deg, var(--neon1), var(--accent2));
-      color: #fff;
-      box-shadow: 0 0 12px rgba(124,111,255,0.35);
+      color: #fff; box-shadow: 0 0 12px rgba(124,111,255,0.35);
     }
-
-    /* ── PLAN CARDS ── */
     .plans { padding: 0 14px; display: none; }
     .plans.active { display: block; }
     .plan-card {
@@ -213,10 +186,9 @@
     .plan-row { display: flex; align-items: center; justify-content: space-between; }
     .plan-name { font-size: 15px; font-weight: 700; }
     .plan-price { font-size: 19px; font-weight: 900; color: var(--accent); text-shadow: 0 0 10px rgba(124,111,255,0.4); }
-    .plan-meta { display: flex; gap: 10px; margin-top: 6px; }
+    .plan-meta { display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
     .plan-tag { font-size: 11px; color: var(--text2); }
-
-    /* ── SUBSCRIPTION ── */
+    .plan-stars { font-size: 11px; color: #f59e0b; }
     .sub-highlight {
       border-radius: 16px; padding: 16px; margin-bottom: 14px; position: relative; overflow: hidden;
       background: linear-gradient(135deg, rgba(124,111,255,0.1), rgba(6,182,212,0.05));
@@ -233,7 +205,7 @@
     .sub-features { margin-bottom: 12px; }
     .sub-feature { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text2); margin-bottom: 6px; }
     .sub-feature::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; text-shadow: 0 0 6px rgba(34,197,94,0.5); }
-    .sub-price-row { display: flex; align-items: baseline; gap: 7px; margin-bottom: 12px; }
+    .sub-price-row { display: flex; align-items: baseline; gap: 7px; margin-bottom: 6px; }
     .sub-price {
       font-size: 32px; font-weight: 900;
       background: linear-gradient(135deg, #a78bfa, var(--neon2));
@@ -241,187 +213,133 @@
       filter: drop-shadow(0 0 6px rgba(124,111,255,0.4));
     }
     .sub-period { font-size: 13px; color: var(--text2); }
-
-    /* ── INFO BLOCK ── */
+    .sub-stars-hint { font-size: 11px; color: #f59e0b; margin-bottom: 12px; }
     .info-block {
       margin: 0 14px; background: rgba(6,182,212,0.05);
       border: 1px solid rgba(6,182,212,0.15); border-radius: 12px;
       padding: 12px; font-size: 11px; color: var(--text2); line-height: 1.6; text-align: center;
     }
     .info-block strong { color: var(--text); }
-
-    /* ── PROMO ── */
     .promo-block { margin: 14px; }
     .promo-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
     .promo-row { display: flex; gap: 8px; }
     .promo-input {
       flex: 1; padding: 12px 14px; border-radius: 12px; font-size: 13px; font-weight: 700;
       background: var(--bg3); border: 1px solid var(--border); color: var(--text);
-      outline: none; letter-spacing: 1px; text-transform: uppercase;
-      transition: border-color 0.2s;
+      outline: none; letter-spacing: 1px; text-transform: uppercase; transition: border-color 0.2s;
     }
     .promo-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(124,111,255,0.15); }
     .promo-btn {
       padding: 12px 18px; border-radius: 12px; border: none; cursor: pointer;
       background: linear-gradient(135deg, var(--neon1), var(--accent2)); color: #fff;
-      font-size: 13px; font-weight: 700;
-      box-shadow: 0 0 12px rgba(124,111,255,0.3);
+      font-size: 13px; font-weight: 700; box-shadow: 0 0 12px rgba(124,111,255,0.3);
     }
     .promo-result { margin-top: 8px; font-size: 12px; padding: 8px 12px; border-radius: 10px; display: none; }
     .promo-result.ok { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.25); display: block; }
     .promo-result.err { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); display: block; }
-
-    /* ── SERVER STATUS ── */
     .servers-block { margin: 12px 14px 0; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; position: relative; overflow: hidden; }
     .servers-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--neon2), transparent); }
     .servers-title { font-size: 12px; font-weight: 700; margin-bottom: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
     .server-chips { display: flex; gap: 7px; flex-wrap: wrap; }
-    .server-chip {
-      font-size: 11px; padding: 5px 11px; border-radius: 20px;
-      background: rgba(34,197,94,0.08); color: var(--green);
-      border: 1px solid rgba(34,197,94,0.2);
-      box-shadow: 0 0 8px rgba(34,197,94,0.1);
-    }
-
-    /* ── REFERRAL ── */
-    .ref-hero {
-      margin: 14px; border-radius: 18px; padding: 22px; text-align: center;
-      background: linear-gradient(135deg, rgba(124,111,255,0.1), rgba(6,182,212,0.06));
-      border: 1px solid rgba(124,111,255,0.25); position: relative; overflow: hidden;
-    }
-    .ref-hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(124,111,255,0.15) 0%, transparent 70%);
-    }
+    .server-chip { font-size: 11px; padding: 5px 11px; border-radius: 20px; background: rgba(34,197,94,0.08); color: var(--green); border: 1px solid rgba(34,197,94,0.2); box-shadow: 0 0 8px rgba(34,197,94,0.1); }
+    .ref-hero { margin: 14px; border-radius: 18px; padding: 22px; text-align: center; background: linear-gradient(135deg, rgba(124,111,255,0.1), rgba(6,182,212,0.06)); border: 1px solid rgba(124,111,255,0.25); position: relative; overflow: hidden; }
+    .ref-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(124,111,255,0.15) 0%, transparent 70%); }
     .ref-emoji { font-size: 44px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(124,111,255,0.4)); }
     .ref-title { font-size: 19px; font-weight: 900; margin-bottom: 6px; }
     .ref-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
-    .ref-reward {
-      margin: 0 14px 12px; border-radius: 14px; padding: 14px;
-      display: flex; align-items: center; gap: 12px;
-      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2);
-      box-shadow: 0 0 15px rgba(34,197,94,0.05);
-    }
-    .ref-reward-icon { font-size: 28px; filter: drop-shadow(0 0 6px rgba(34,197,94,0.4)); }
-    .ref-reward-title { font-size: 14px; font-weight: 800; color: var(--green); text-shadow: 0 0 8px rgba(34,197,94,0.3); }
+    .ref-reward { margin: 0 14px 12px; border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); }
+    .ref-reward-icon { font-size: 28px; }
+    .ref-reward-title { font-size: 14px; font-weight: 800; color: var(--green); }
     .ref-reward-desc { font-size: 11px; color: var(--text2); margin-top: 2px; }
     .ref-stats { display: flex; gap: 8px; margin: 0 14px 12px; }
     .ref-stat { flex: 1; border-radius: 14px; padding: 14px; text-align: center; background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden; }
-    .ref-stat::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--neon1), var(--neon2)); box-shadow: 0 0 8px rgba(124,111,255,0.5); }
-    .ref-stat-num { font-size: 24px; font-weight: 900; color: var(--accent); text-shadow: 0 0 10px rgba(124,111,255,0.4); }
+    .ref-stat::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--neon1), var(--neon2)); }
+    .ref-stat-num { font-size: 24px; font-weight: 900; color: var(--accent); }
     .ref-stat-label { font-size: 10px; color: var(--text2); margin-top: 2px; }
     .ref-link-block { margin: 0 14px 12px; }
     .ref-link-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    .ref-link-box {
-      display: flex; border-radius: 12px; overflow: hidden;
-      border: 1px solid rgba(124,111,255,0.3);
-      box-shadow: 0 0 12px rgba(124,111,255,0.1);
-      background: var(--bg3);
-    }
+    .ref-link-box { display: flex; border-radius: 12px; overflow: hidden; border: 1px solid rgba(124,111,255,0.3); background: var(--bg3); }
     .ref-link-text { flex: 1; padding: 12px; font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ref-copy-btn {
-      padding: 12px 16px; color: #fff; font-size: 12px; font-weight: 700; border: none; cursor: pointer;
-      background: linear-gradient(135deg, var(--neon1), var(--accent2));
-      transition: opacity 0.2s;
-    }
-    .ref-copy-btn:active { opacity: 0.8; }
+    .ref-copy-btn { padding: 12px 16px; color: #fff; font-size: 12px; font-weight: 700; border: none; cursor: pointer; background: linear-gradient(135deg, var(--neon1), var(--accent2)); }
     .ref-steps { margin: 0 14px 14px; }
     .ref-step { display: flex; gap: 12px; align-items: flex-start; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 13px; margin-bottom: 8px; }
-    .ref-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0; background: linear-gradient(135deg, var(--neon1), var(--accent2)); box-shadow: 0 0 10px rgba(124,111,255,0.4); }
+    .ref-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0; background: linear-gradient(135deg, var(--neon1), var(--accent2)); }
     .ref-step-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
     .ref-step-desc { font-size: 11px; color: var(--text2); line-height: 1.4; }
-
-    /* ── PROFILE ── */
-    .profile-header {
-      display: flex; flex-direction: column; align-items: center;
-      padding: 26px 20px 20px;
-      background: linear-gradient(180deg, rgba(124,111,255,0.1) 0%, transparent 100%);
-      position: relative; overflow: hidden;
-    }
-    .profile-header::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--neon1), var(--neon2), var(--neon3), transparent);
-      animation: navglow 3s ease-in-out infinite;
-    }
-    /* Animated avatar ring */
+    .profile-header { display: flex; flex-direction: column; align-items: center; padding: 26px 20px 20px; background: linear-gradient(180deg, rgba(124,111,255,0.1) 0%, transparent 100%); position: relative; overflow: hidden; }
+    .profile-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--neon1), var(--neon2), var(--neon3), transparent); animation: navglow 3s ease-in-out infinite; }
     .avatar-ring { position: relative; width: 88px; height: 88px; margin-bottom: 14px; }
-    .avatar-ring-spin {
-      position: absolute; inset: -4px; border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--neon1), var(--neon2), var(--neon3), var(--neon1));
-      animation: spin 3s linear infinite;
-      box-shadow: 0 0 15px rgba(124,111,255,0.5), 0 0 30px rgba(6,182,212,0.3);
-    }
-    .avatar-ring-spin2 {
-      position: absolute; inset: -4px; border-radius: 50%;
-      background: conic-gradient(from 180deg, var(--neon3), var(--neon2), var(--neon1), var(--neon3));
-      animation: spin 2s linear infinite reverse;
-      opacity: 0.4;
-    }
+    .avatar-ring-spin { position: absolute; inset: -4px; border-radius: 50%; background: conic-gradient(from 0deg, var(--neon1), var(--neon2), var(--neon3), var(--neon1)); animation: spin 3s linear infinite; box-shadow: 0 0 15px rgba(124,111,255,0.5); }
+    .avatar-ring-spin2 { position: absolute; inset: -4px; border-radius: 50%; background: conic-gradient(from 180deg, var(--neon3), var(--neon2), var(--neon1), var(--neon3)); animation: spin 2s linear infinite reverse; opacity: 0.4; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .avatar-inner {
-      position: absolute; inset: 4px; border-radius: 50%;
-      background: var(--bg2); display: flex; align-items: center;
-      justify-content: center; font-size: 34px; z-index: 1; overflow: hidden;
-    }
+    .avatar-inner { position: absolute; inset: 4px; border-radius: 50%; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 34px; z-index: 1; overflow: hidden; }
     .avatar-inner img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .profile-name { font-size: 18px; font-weight: 800; }
     .profile-id { font-size: 12px; color: var(--text2); margin-top: 3px; }
-    .profile-sub-badge {
-      margin-top: 10px; padding: 6px 18px; border-radius: 20px;
-      font-size: 11px; font-weight: 700;
-      background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3);
-    }
-    .profile-sub-badge.active-s {
-      background: rgba(34,197,94,0.1); color: var(--green); border-color: rgba(34,197,94,0.3);
-      box-shadow: 0 0 12px rgba(34,197,94,0.15);
-    }
+    .profile-sub-badge { margin-top: 10px; padding: 6px 18px; border-radius: 20px; font-size: 11px; font-weight: 700; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+    .profile-sub-badge.active-s { background: rgba(34,197,94,0.1); color: var(--green); border-color: rgba(34,197,94,0.3); }
     .profile-menu { margin: 14px; }
     .profile-menu-group { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 10px; }
-    .pmi {
-      display: flex; align-items: center; gap: 12px; padding: 14px 16px;
-      cursor: pointer; border: none; background: transparent; width: 100%;
-      text-align: left; color: var(--text); transition: background 0.15s;
-    }
+    .pmi { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; border: none; background: transparent; width: 100%; text-align: left; color: var(--text); transition: background 0.15s; }
     .pmi:not(:last-child) { border-bottom: 1px solid var(--border); }
     .pmi:active { background: rgba(124,111,255,0.06); }
     .pmi-icon { font-size: 17px; width: 22px; text-align: center; flex-shrink: 0; }
     .pmi-text { flex: 1; font-size: 13px; font-weight: 500; }
     .pmi-arrow { color: var(--text2); font-size: 16px; }
     .pmi-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(124,111,255,0.15); color: var(--accent); border: 1px solid rgba(124,111,255,0.25); }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
-    }
+    /* ── MODALS ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); }
     .modal-overlay.open { display: flex; align-items: flex-end; }
-    .modal-sheet {
-      width: 100%; background: var(--bg2); border-radius: 20px 20px 0 0;
-      max-height: 85vh; overflow-y: auto;
-      border-top: 1px solid rgba(124,111,255,0.3);
-      box-shadow: 0 -4px 30px rgba(124,111,255,0.15);
-    }
+    .modal-sheet { width: 100%; background: var(--bg2); border-radius: 20px 20px 0 0; max-height: 85vh; overflow-y: auto; border-top: 1px solid rgba(124,111,255,0.3); box-shadow: 0 -4px 30px rgba(124,111,255,0.15); }
     .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 12px auto 0; }
     .modal-title { font-size: 17px; font-weight: 800; padding: 16px 20px 8px; background: linear-gradient(135deg, var(--text), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .modal-body { padding: 0 20px 30px; font-size: 12px; color: var(--text2); line-height: 1.8; }
     .modal-body h3 { font-size: 13px; font-weight: 700; color: var(--text); margin: 14px 0 5px; }
-    .modal-close {
-      position: absolute; top: 14px; right: 18px;
-      background: rgba(255,255,255,0.06); border: none; color: var(--text2);
-      width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px;
+    .modal-close { position: absolute; top: 14px; right: 18px; background: rgba(255,255,255,0.06); border: none; color: var(--text2); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px; }
+    /* ── PAYMENT METHOD MODAL ── */
+    .pay-overlay { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.82); backdrop-filter: blur(8px); }
+    .pay-overlay.open { display: flex; align-items: flex-end; }
+    .pay-sheet {
+      width: 100%; background: var(--bg2); border-radius: 28px 28px 0 0;
+      border-top: 1px solid rgba(124,111,255,0.4);
+      box-shadow: 0 -8px 50px rgba(124,111,255,0.2);
+      padding-bottom: max(env(safe-area-inset-bottom), 20px);
     }
+    .pay-title { font-size: 17px; font-weight: 800; text-align: center; padding: 18px 20px 4px; }
+    .pay-plan-info { text-align: center; padding: 0 20px 16px; }
+    .pay-plan-label { font-size: 13px; color: var(--text2); margin-bottom: 4px; }
+    .pay-plan-big {
+      font-size: 26px; font-weight: 900;
+      background: linear-gradient(135deg, #a78bfa, var(--neon2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .pay-divider { height: 1px; background: var(--border); margin: 0 20px 16px; }
+    .pay-method-btn {
+      display: flex; align-items: center; gap: 14px;
+      margin: 0 16px 10px; padding: 16px 18px;
+      border-radius: 18px; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 700; color: #fff;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .pay-method-btn:active { transform: scale(0.97); }
+    .pay-method-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+    .pay-method-info { text-align: left; }
+    .pay-method-name { font-size: 15px; font-weight: 800; }
+    .pay-method-hint { font-size: 11px; opacity: 0.75; margin-top: 2px; }
+    .pay-btn-stars { background: linear-gradient(135deg, #b45309, #f59e0b, #fbbf24); box-shadow: 0 4px 20px rgba(245,158,11,0.4); }
+    .pay-btn-crypto { background: linear-gradient(135deg, #0284c7, #06b6d4); box-shadow: 0 4px 20px rgba(6,182,212,0.3); }
+    .pay-cancel { display: block; text-align: center; padding: 14px 20px 4px; color: var(--text2); font-size: 14px; cursor: pointer; border: none; background: none; width: 100%; }
   </style>
 </head>
 <body>
 
-<!-- ═══ ГЛАВНАЯ ═══ -->
+<!-- ГЛАВНАЯ -->
 <div class="page active" id="page-home">
   <div class="header">
     <div class="header-glow"></div>
     <div class="logo">VPN Itamani</div>
     <div class="tagline">Быстрый · Надёжный · Без ограничений</div>
   </div>
-
   <div class="status-card">
     <div class="status-icon" id="homeStatusIcon">🔒</div>
     <div>
@@ -430,18 +348,15 @@
     </div>
     <div class="status-badge">Неактивно</div>
   </div>
-
   <div class="features">
     <div class="feature"><div class="feature-icon">♾️</div><div class="feature-text">Безлимит<br>трафика</div></div>
     <div class="feature"><div class="feature-icon">📱</div><div class="feature-text">До 10<br>устройств</div></div>
     <div class="feature"><div class="feature-icon">⚡</div><div class="feature-text">Высокая<br>скорость</div></div>
     <div class="feature"><div class="feature-icon">🌍</div><div class="feature-text">Серверы<br>EU/USA</div></div>
   </div>
-
   <div style="margin: 0 14px 12px;">
     <button class="btn btn-primary" onclick="switchPage('payment')">🛒 Купить VPN</button>
   </div>
-
   <div class="servers-block">
     <div class="servers-title">📡 Статус серверов</div>
     <div class="server-chips">
@@ -453,10 +368,9 @@
   </div>
 </div>
 
-<!-- ═══ ОПЛАТА ═══ -->
+<!-- ОПЛАТА -->
 <div class="page" id="page-payment">
   <div class="page-title">💳 Оплата</div>
-
   <div class="promo-block">
     <div class="promo-label">Промокод</div>
     <div class="promo-row">
@@ -465,12 +379,10 @@
     </div>
     <div class="promo-result" id="promoResult"></div>
   </div>
-
   <div class="tabs">
     <button class="tab active" onclick="switchTab('sub')">🔄 Подписка</button>
     <button class="tab" onclick="switchTab('once')">📅 Разовая</button>
   </div>
-
   <div class="plans active" id="tab-sub">
     <div class="sub-highlight">
       <div class="sub-title">Автоподписка</div>
@@ -481,30 +393,47 @@
         <div class="sub-feature">Не нужно помнить о сроках</div>
       </div>
       <div class="sub-price-row"><div class="sub-price">250 ₽</div><div class="sub-period">/ месяц</div></div>
-      <button class="btn btn-primary" onclick="buyPlan('sub_month',250)">Оформить подписку</button>
+      <div class="sub-stars-hint">или 150 ⭐ Telegram Stars</div>
+      <button class="btn btn-primary" onclick="buyPlan('sub_month', 250, 'Подписка — 1 месяц')">Оформить подписку</button>
     </div>
     <div class="info-block"><strong>Безлимит трафика · 10 устройств</strong><br>РКН блокирует — мы разблокируем. Всегда.</div>
   </div>
-
   <div class="plans" id="tab-once">
-    <div class="plan-card" onclick="buyPlan('day',20)"><div class="plan-row"><div class="plan-name">День</div><div class="plan-price">20 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
-    <div class="plan-card" onclick="buyPlan('week',100)"><div class="plan-row"><div class="plan-name">Неделя</div><div class="plan-price">100 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
-    <div class="plan-card recommended" onclick="buyPlan('month',300)"><div class="plan-row"><div class="plan-name">Месяц</div><div class="plan-price">300 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div></div></div>
-    <div class="plan-card" onclick="buyPlan('3month',825)"><div class="plan-row"><div class="plan-name">3 месяца</div><div class="plan-price">825 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −8%</div></div></div>
-    <div class="plan-card" onclick="buyPlan('6month',1575)"><div class="plan-row"><div class="plan-name">Полгода</div><div class="plan-price">1 575 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −12%</div></div></div>
-    <div class="plan-card" onclick="buyPlan('year',3000)"><div class="plan-row"><div class="plan-name">Год</div><div class="plan-price">3 000 ₽</div></div><div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-tag" style="color:#22c55e">🔥 −17%</div></div></div>
+    <div class="plan-card" onclick="buyPlan('day', 20, 'День')">
+      <div class="plan-row"><div class="plan-name">День</div><div class="plan-price">20 ₽</div></div>
+      <div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-stars">⭐ 50 Stars</div></div>
+    </div>
+    <div class="plan-card" onclick="buyPlan('week', 100, 'Неделя')">
+      <div class="plan-row"><div class="plan-name">Неделя</div><div class="plan-price">100 ₽</div></div>
+      <div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-stars">⭐ 100 Stars</div></div>
+    </div>
+    <div class="plan-card recommended" onclick="buyPlan('month', 300, 'Месяц')">
+      <div class="plan-row"><div class="plan-name">Месяц</div><div class="plan-price">300 ₽</div></div>
+      <div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-stars">⭐ 150 Stars</div></div>
+    </div>
+    <div class="plan-card" onclick="buyPlan('3month', 825, '3 месяца')">
+      <div class="plan-row"><div class="plan-name">3 месяца</div><div class="plan-price">825 ₽</div></div>
+      <div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-stars">⭐ 400 Stars</div><div class="plan-tag" style="color:#22c55e">🔥 −8%</div></div>
+    </div>
+    <div class="plan-card" onclick="buyPlan('6month', 1575, '6 месяцев')">
+      <div class="plan-row"><div class="plan-name">Полгода</div><div class="plan-price">1 575 ₽</div></div>
+      <div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-stars">⭐ 700 Stars</div><div class="plan-tag" style="color:#22c55e">🔥 −12%</div></div>
+    </div>
+    <div class="plan-card" onclick="buyPlan('year', 3000, 'Год')">
+      <div class="plan-row"><div class="plan-name">Год</div><div class="plan-price">3 000 ₽</div></div>
+      <div class="plan-meta"><div class="plan-tag">♾️ Безлимит</div><div class="plan-tag">📱 10 уст.</div><div class="plan-stars">⭐ 1100 Stars</div><div class="plan-tag" style="color:#22c55e">🔥 −17%</div></div>
+    </div>
     <div class="info-block" style="margin:0;"><strong>Один платёж — один период</strong><br>Ничего не спишется автоматически</div>
   </div>
 </div>
 
-<!-- ═══ РЕФЕРАЛЫ ═══ -->
+<!-- РЕФЕРАЛЫ -->
 <div class="page" id="page-ref">
   <div class="ref-hero">
     <div class="ref-emoji">🎁</div>
     <div class="ref-title">Зарабатывай с друзьями</div>
     <div class="ref-desc">Приглашай друзей и получай 15% с каждой их покупки</div>
   </div>
-
   <div class="ref-reward">
     <div class="ref-reward-icon">💰</div>
     <div>
@@ -512,12 +441,10 @@
       <div class="ref-reward-desc">Зачисляется на баланс сразу после оплаты</div>
     </div>
   </div>
-
   <div class="ref-stats">
     <div class="ref-stat"><div class="ref-stat-num" id="refCount">0</div><div class="ref-stat-label">Приглашено</div></div>
     <div class="ref-stat"><div class="ref-stat-num" id="refEarned">0 ₽</div><div class="ref-stat-label">Заработано</div></div>
   </div>
-
   <div class="ref-link-block">
     <div class="ref-link-label">Ваша реферальная ссылка</div>
     <div class="ref-link-box">
@@ -525,15 +452,14 @@
       <button class="ref-copy-btn" id="copyBtn" onclick="copyRef()">Копировать</button>
     </div>
   </div>
-
   <div class="ref-steps">
-    <div class="ref-step"><div class="ref-num">1</div><div><div class="ref-step-title">Поделитесь ссылкой</div><div class="ref-step-desc">Отправьте реферальную ссылку другу в любом мессенджере</div></div></div>
-    <div class="ref-step"><div class="ref-num">2</div><div><div class="ref-step-title">Друг покупает VPN</div><div class="ref-step-desc">Он переходит по вашей ссылке и оформляет любой тариф</div></div></div>
-    <div class="ref-step"><div class="ref-num">3</div><div><div class="ref-step-title">Вы получаете 15%</div><div class="ref-step-desc">15% от суммы его покупки мгновенно зачисляются на баланс</div></div></div>
+    <div class="ref-step"><div class="ref-num">1</div><div><div class="ref-step-title">Поделитесь ссылкой</div><div class="ref-step-desc">Отправьте реферальную ссылку другу</div></div></div>
+    <div class="ref-step"><div class="ref-num">2</div><div><div class="ref-step-title">Друг покупает VPN</div><div class="ref-step-desc">Он переходит по вашей ссылке и оформляет тариф</div></div></div>
+    <div class="ref-step"><div class="ref-num">3</div><div><div class="ref-step-title">Вы получаете 15%</div><div class="ref-step-desc">15% от его покупки мгновенно зачисляются вам</div></div></div>
   </div>
 </div>
 
-<!-- ═══ ПРОФИЛЬ ═══ -->
+<!-- ПРОФИЛЬ -->
 <div class="page" id="page-profile">
   <div class="profile-header">
     <div class="avatar-ring">
@@ -545,7 +471,6 @@
     <div class="profile-id" id="profileId">ID: —</div>
     <div class="profile-sub-badge" id="profileBadge">❌ Нет подписки</div>
   </div>
-
   <div class="profile-menu">
     <div class="profile-menu-group">
       <button class="pmi" onclick="openPromo()"><span class="pmi-icon">🏷️</span><span class="pmi-text">Промокод</span><span class="pmi-arrow">›</span></button>
@@ -562,7 +487,7 @@
   </div>
 </div>
 
-<!-- ═══ BOTTOM NAV ═══ -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="nav-btn active" onclick="switchPage('home')" id="nav-home"><span class="nav-icon">🏠</span>Главная</button>
   <button class="nav-btn" onclick="switchPage('payment')" id="nav-payment"><span class="nav-icon">💳</span>Оплата</button>
@@ -570,7 +495,35 @@
   <button class="nav-btn" onclick="switchPage('profile')" id="nav-profile"><span class="nav-icon">👤</span>Профиль</button>
 </nav>
 
-<!-- ═══ MODAL: Публичная оферта ═══ -->
+<!-- PAYMENT METHOD MODAL -->
+<div class="pay-overlay" id="payModal" onclick="closePayModal(event)">
+  <div class="pay-sheet">
+    <div class="modal-handle"></div>
+    <div class="pay-title">Способ оплаты</div>
+    <div class="pay-plan-info">
+      <div class="pay-plan-label" id="payPlanLabel">VPN — 1 месяц</div>
+      <div class="pay-plan-big" id="payPlanBig">300 ₽ / 150 ⭐</div>
+    </div>
+    <div class="pay-divider"></div>
+    <button class="pay-method-btn pay-btn-stars" onclick="payWithStars()">
+      <div class="pay-method-icon">⭐</div>
+      <div class="pay-method-info">
+        <div class="pay-method-name">Telegram Stars</div>
+        <div class="pay-method-hint">Мгновенно · Без комиссий · Прямо в Telegram</div>
+      </div>
+    </button>
+    <button class="pay-method-btn pay-btn-crypto" onclick="payWithCrypto()">
+      <div class="pay-method-icon">💎</div>
+      <div class="pay-method-info">
+        <div class="pay-method-name">Криптовалюта</div>
+        <div class="pay-method-hint">TON · USDT · Быстро и анонимно</div>
+      </div>
+    </button>
+    <button class="pay-cancel" onclick="closePayModalById()">Отмена</button>
+  </div>
+</div>
+
+<!-- MODAL: Оферта -->
 <div class="modal-overlay" id="modal-offer" onclick="closeModal(event,'offer')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -579,41 +532,18 @@
       <button class="modal-close" onclick="closeModalById('offer')">✕</button>
     </div>
     <div class="modal-body">
-      <p>Настоящая Публичная оферта (далее — «Оферта») является официальным предложением индивидуального предпринимателя, именуемого далее «Исполнитель», заключить договор на оказание услуг доступа к VPN-сервису <strong>VPN Itamani</strong> на изложенных ниже условиях.</p>
-
-      <h3>1. Термины и определения</h3>
-      <p><strong>Сервис</strong> — программный комплекс VPN Itamani, обеспечивающий защищённый доступ к сети Интернет.<br>
-      <strong>Пользователь</strong> — физическое лицо, принявшее условия настоящей Оферты.<br>
-      <strong>Подписка</strong> — оплаченный период доступа к Сервису.</p>
-
-      <h3>2. Предмет договора</h3>
-      <p>Исполнитель предоставляет Пользователю доступ к VPN-сервису в течение оплаченного периода. Сервис обеспечивает шифрование интернет-трафика и смену IP-адреса.</p>
-
-      <h3>3. Стоимость и порядок оплаты</h3>
-      <p>Стоимость услуг определяется действующим прейскурантом, размещённым в интерфейсе приложения. Оплата производится через платёжные системы, интегрированные в Telegram-бот. Все цены указаны в рублях РФ и включают НДС.</p>
-
-      <h3>4. Условия использования</h3>
-      <p>Пользователь вправе использовать Сервис на устройствах до 10 (десяти) включительно. Передача доступа третьим лицам запрещена. Использование Сервиса в незаконных целях запрещено.</p>
-
-      <h3>5. Возврат денежных средств</h3>
-      <p>Возврат осуществляется в течение 24 часов с момента первой оплаты при условии, что Пользователь не использовал Сервис более 100 МБ трафика. Для возврата обратитесь в поддержку: <strong>@vpnitamani</strong>.</p>
-
-      <h3>6. Ограничение ответственности</h3>
-      <p>Исполнитель не несёт ответственности за перебои в работе Сервиса, вызванные действиями третьих лиц, форс-мажорными обстоятельствами или действиями регуляторов.</p>
-
-      <h3>7. Реферальная программа</h3>
-      <p>Пользователь получает 15% от суммы каждой покупки привлечённого им реферала. Вознаграждение зачисляется на баланс в системе и может быть использовано для оплаты подписки.</p>
-
-      <h3>8. Акцепт Оферты</h3>
-      <p>Оплата услуг означает полное и безоговорочное принятие условий настоящей Оферты.</p>
-
-      <h3>9. Контакты</h3>
-      <p>Служба поддержки: @vpnitamani в Telegram.</p>
+      <p>Настоящая Публичная оферта является официальным предложением на оказание услуг доступа к VPN-сервису <strong>VPN Itamani</strong>.</p>
+      <h3>1. Предмет договора</h3><p>Исполнитель предоставляет Пользователю доступ к VPN-сервису в течение оплаченного периода.</p>
+      <h3>2. Стоимость и оплата</h3><p>Стоимость определяется прейскурантом в приложении. Оплата через Telegram Stars, криптовалюту или иные способы, доступные в боте.</p>
+      <h3>3. Условия использования</h3><p>До 10 устройств на одной подписке. Передача доступа третьим лицам и использование в незаконных целях запрещены.</p>
+      <h3>4. Возврат</h3><p>Возврат в течение 24 часов при использовании менее 100 МБ трафика. Обратитесь в поддержку: <strong>@vpnitamani</strong>.</p>
+      <h3>5. Реферальная программа</h3><p>Пользователь получает 15% от покупки привлечённого реферала в виде бонуса.</p>
+      <h3>6. Контакты</h3><p>Поддержка: @vpnitamani в Telegram.</p>
     </div>
   </div>
 </div>
 
-<!-- ═══ MODAL: Политика ═══ -->
+<!-- MODAL: Privacy -->
 <div class="modal-overlay" id="modal-privacy" onclick="closeModal(event,'privacy')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -622,37 +552,10 @@
       <button class="modal-close" onclick="closeModalById('privacy')">✕</button>
     </div>
     <div class="modal-body">
-      <p>Настоящая Политика конфиденциальности описывает, какие данные собирает сервис <strong>VPN Itamani</strong>, как они используются и защищаются.</p>
-
-      <h3>1. Какие данные мы собираем</h3>
-      <p><strong>Данные Telegram:</strong> Telegram ID, имя пользователя, имя и фамилия (если указаны в профиле). Эти данные передаются автоматически при запуске Mini App.<br>
-      <strong>Платёжные данные:</strong> мы не хранем данные банковских карт — они обрабатываются платёжными системами напрямую.<br>
-      <strong>Технические данные:</strong> IP-адрес, тип устройства, время подключения — для работы VPN-сервиса.</p>
-
-      <h3>2. Как мы используем данные</h3>
-      <p>— Для предоставления доступа к VPN-сервису;<br>
-      — Для обработки платежей и управления подпиской;<br>
-      — Для работы реферальной программы;<br>
-      — Для технической поддержки пользователей;<br>
-      — Для предотвращения злоупотреблений сервисом.</p>
-
-      <h3>3. VPN и конфиденциальность</h3>
-      <p>Мы не ведём логи интернет-активности пользователей (посещённые сайты, запросы). Мы фиксируем только факт подключения и объём трафика для технических нужд и контроля лимитов.</p>
-
-      <h3>4. Передача данных третьим лицам</h3>
-      <p>Мы не продаём и не передаём персональные данные третьим лицам, за исключением платёжных систем (для обработки оплаты) и хостинг-провайдеров (для работы серверов).</p>
-
-      <h3>5. Хранение данных</h3>
-      <p>Данные хранятся на защищённых серверах в Европе. Срок хранения — до момента удаления аккаунта или в течение 1 года после последнего использования.</p>
-
-      <h3>6. Ваши права</h3>
-      <p>Вы вправе запросить удаление своих данных, обратившись в поддержку: <strong>@vpnitamani</strong>. Запрос выполняется в течение 30 дней.</p>
-
-      <h3>7. Безопасность</h3>
-      <p>Все соединения шифруются по протоколу VLESS+Reality. Мы регулярно обновляем серверное ПО и проводим аудит безопасности.</p>
-
-      <h3>8. Контакты</h3>
-      <p>По вопросам конфиденциальности: @vpnitamani в Telegram.</p>
+      <h3>Данные</h3><p>Telegram ID, имя — передаются при запуске Mini App. Платёжные данные не хранятся — обрабатываются платёжными системами.</p>
+      <h3>VPN и логи</h3><p>Мы не ведём логи интернет-активности. Фиксируем только факт подключения и объём трафика.</p>
+      <h3>Ваши права</h3><p>Запрос на удаление данных: @vpnitamani. Выполняется в течение 30 дней.</p>
+      <h3>Безопасность</h3><p>Шифрование по протоколу VLESS+Reality. Регулярный аудит серверов.</p>
     </div>
   </div>
 </div>
@@ -664,22 +567,19 @@
     tg.setHeaderColor('#080810'); tg.setBackgroundColor('#080810');
     const user = tg.initDataUnsafe?.user;
     if (user) {
-      document.getElementById('profileName').textContent =
-        (user.first_name || '') + (user.last_name ? ' ' + user.last_name : '');
+      document.getElementById('profileName').textContent = (user.first_name || '') + (user.last_name ? ' ' + user.last_name : '');
       document.getElementById('profileId').textContent = 'ID: ' + user.id;
       if (user.photo_url) {
-        document.getElementById('avatarEl').innerHTML = `<img src="${user.photo_url}" alt="">`;
+        document.getElementById('avatarEl').innerHTML = '<img src="' + user.photo_url + '" alt="">';
       } else {
         document.getElementById('avatarEl').textContent = (user.first_name || '?')[0].toUpperCase();
       }
-      document.getElementById('refLink').textContent =
-        `https://t.me/vpnitamani_bot?start=ref_${user.id}`;
+      document.getElementById('refLink').textContent = 'https://t.me/Vpnitamani_bot?start=ref_' + user.id;
     }
-  } else {
-    document.getElementById('profileName').textContent = 'Владислав';
-    document.getElementById('profileId').textContent = 'ID: 1989200344';
-    document.getElementById('refLink').textContent = 'https://t.me/vpnitamani_bot?start=ref_1989200344';
   }
+
+  const STARS_MAP = { sub_month:150, day:50, week:100, month:150, '3month':400, '6month':700, year:1100 };
+  let curPlan = null, curPrice = 0, curName = '';
 
   function switchPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -691,46 +591,54 @@
 
   function switchTab(tab) {
     document.querySelectorAll('.tab').forEach((t, i) =>
-      t.classList.toggle('active', (i === 0 && tab === 'sub') || (i === 1 && tab === 'once')));
-    document.getElementById('tab-sub').classList.toggle('active', tab === 'sub');
-    document.getElementById('tab-once').classList.toggle('active', tab === 'once');
+      t.classList.toggle('active', (i===0 && tab==='sub') || (i===1 && tab==='once')));
+    document.getElementById('tab-sub').classList.toggle('active', tab==='sub');
+    document.getElementById('tab-once').classList.toggle('active', tab==='once');
   }
 
-  function buyPlan(plan, price) {
-    if (tg) tg.sendData(JSON.stringify({ action: 'buy', plan, price }));
-    else alert('Тариф: ' + plan + ' — ' + price + '₽\n(Открой в Telegram)');
+  function buyPlan(plan, price, name) {
+    curPlan = plan; curPrice = price; curName = name;
+    const stars = STARS_MAP[plan] || Math.round(price / 2);
+    document.getElementById('payPlanLabel').textContent = name;
+    document.getElementById('payPlanBig').textContent = price + ' ₽  /  ' + stars + ' ⭐';
+    document.getElementById('payModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePayModal(e) { if (e.target === document.getElementById('payModal')) closePayModalById(); }
+  function closePayModalById() { document.getElementById('payModal').classList.remove('open'); document.body.style.overflow = ''; }
+
+  function payWithStars() {
+    closePayModalById();
+    const stars = STARS_MAP[curPlan] || Math.round(curPrice / 2);
+    if (tg) tg.sendData(JSON.stringify({ action: 'buy_stars', plan: curPlan, stars, name: curName }));
+    else alert('Stars: ' + stars + ' ⭐ — открой в Telegram');
+  }
+
+  function payWithCrypto() {
+    closePayModalById();
+    if (tg) tg.sendData(JSON.stringify({ action: 'crypto_pay', plan: curPlan, rub: curPrice, name: curName }));
+    else alert('Крипто — открой в Telegram');
   }
 
   function applyPromo() {
     const code = document.getElementById('promoInput').value.trim().toUpperCase();
     const result = document.getElementById('promoResult');
-    if (code === 'ITAMANI') {
-      result.className = 'promo-result ok';
-      result.textContent = '🎉 Промокод применён! +1 день VPN бесплатно';
-      if (tg) tg.sendData(JSON.stringify({ action: 'promo', code }));
-    } else if (code === '') {
-      result.className = 'promo-result err';
-      result.textContent = '⚠️ Введите промокод';
+    if (!code) { result.className='promo-result err'; result.textContent='⚠️ Введите промокод'; return; }
+    if (tg) {
+      tg.sendData(JSON.stringify({ action: 'promo', code }));
+      result.className='promo-result ok'; result.textContent='⏳ Проверяем промокод...';
     } else {
-      result.className = 'promo-result err';
-      result.textContent = '❌ Промокод недействителен';
+      result.className='promo-result err'; result.textContent='Открой в Telegram для проверки';
     }
   }
 
-  function openPromo() {
-    switchPage('payment');
-    setTimeout(() => document.getElementById('promoInput').focus(), 300);
-  }
+  function openPromo() { switchPage('payment'); setTimeout(() => document.getElementById('promoInput').focus(), 300); }
 
   function copyRef() {
     const link = document.getElementById('refLink').textContent;
     const btn = document.getElementById('copyBtn');
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(link).then(() => {
-        btn.textContent = '✓ Скопировано!';
-        setTimeout(() => btn.textContent = 'Копировать', 2500);
-      });
-    }
+    navigator.clipboard?.writeText(link).then(() => { btn.textContent='✓ Скопировано!'; setTimeout(() => btn.textContent='Копировать', 2500); });
   }
 
   function openSupport() {
@@ -738,24 +646,11 @@
     else window.open('https://t.me/vpnitamani', '_blank');
   }
 
-  function openModal(id) {
-    document.getElementById('modal-' + id).classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+  function openModal(id) { document.getElementById('modal-' + id).classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModalById(id) { document.getElementById('modal-' + id).classList.remove('open'); document.body.style.overflow=''; }
+  function closeModal(e, id) { if (e.target===document.getElementById('modal-'+id)) closeModalById(id); }
 
-  function closeModalById(id) {
-    document.getElementById('modal-' + id).classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function closeModal(e, id) {
-    if (e.target === document.getElementById('modal-' + id)) closeModalById(id);
-  }
-
-  // Promo input uppercase
-  document.getElementById('promoInput').addEventListener('input', function() {
-    this.value = this.value.toUpperCase();
-  });
+  document.getElementById('promoInput').addEventListener('input', function() { this.value=this.value.toUpperCase(); });
 </script>
 </body>
 </html>
