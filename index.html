@@ -8,387 +8,182 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     :root{
-      --bg:#0f0f0f;
-      --bg2:#161616;
-      --bg3:#1e1e1e;
-      --card:#1a1a1a;
-      --card2:#222222;
-      --border:rgba(255,255,255,0.07);
-      --border2:rgba(255,255,255,0.12);
-      --text:#ffffff;
-      --text2:#8e8e93;
-      --text3:#5a5a5f;
-      --accent:#6366f1;
-      --accent-light:rgba(99,102,241,0.15);
-      --gold:#f59e0b;
-      --gold-light:rgba(245,158,11,0.12);
-      --green:#34d399;
-      --green-light:rgba(52,211,153,0.1);
-      --red:#f87171;
-      --red-light:rgba(248,113,113,0.1);
-      --radius:16px;
-      --radius-sm:12px;
-      --radius-lg:20px;
+      --bg:#0f0f0f;--bg2:#161616;--bg3:#1e1e1e;
+      --card:#1a1a1a;--card2:#222;
+      --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+      --text:#fff;--text2:#8e8e93;--text3:#5a5a5f;
+      --accent:#6366f1;--accent-l:rgba(99,102,241,0.15);
+      --gold:#f59e0b;--gold-l:rgba(245,158,11,0.12);
+      --green:#34d399;--green-l:rgba(52,211,153,0.1);
+      --red:#f87171;--red-l:rgba(248,113,113,0.1);
+      --cyan:#06b6d4;--cyan-l:rgba(6,182,212,0.1);
+      --r:16px;--rsm:12px;--rlg:20px;
     }
-    body{
-      background:var(--bg);color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
-      min-height:100vh;padding-bottom:76px;overflow-x:hidden;
-      font-size:15px;line-height:1.5;
-    }
-    .page{display:none}
-    .page.active{display:block}
-
-    /* ── NAV ── */
-    .nav{
-      position:fixed;bottom:0;left:0;right:0;z-index:100;
-      background:rgba(15,15,15,0.96);
-      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-      border-top:1px solid var(--border);
-      display:flex;
-      padding-bottom:env(safe-area-inset-bottom,0);
-    }
-    .nav-btn{
-      flex:1;display:flex;flex-direction:column;align-items:center;
-      padding:10px 0 9px;cursor:pointer;border:none;background:none;
-      color:var(--text2);font-size:10px;gap:4px;letter-spacing:0.3px;
-      transition:color 0.2s;
-    }
-    .nav-btn.active{color:var(--accent)}
-    .nav-icon{font-size:22px;line-height:1}
-
-    /* ── HEADER ── */
-    .header{padding:28px 20px 20px;text-align:center}
-    .logo{
-      font-size:32px;font-weight:800;letter-spacing:-1px;
-      background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.7) 100%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    }
-    .logo span{
-      background:linear-gradient(135deg,var(--accent),#818cf8);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    }
-    .tagline{font-size:13px;color:var(--text2);margin-top:4px;letter-spacing:0.2px}
-
-    /* ── CARDS ── */
-    .card{
-      background:var(--card);border-radius:var(--radius);
-      border:1px solid var(--border);overflow:hidden;
-    }
-    .card-sm{background:var(--card);border-radius:var(--radius-sm);border:1px solid var(--border)}
-
-    /* ── STATUS ── */
-    .status{
-      margin:0 16px 12px;padding:16px;
-      background:var(--card);border-radius:var(--radius);border:1px solid var(--border);
-      display:flex;align-items:center;gap:14px;
-    }
-    .status-dot{
-      width:44px;height:44px;border-radius:50%;flex-shrink:0;
-      display:flex;align-items:center;justify-content:center;font-size:20px;
-      background:var(--red-light);border:1.5px solid rgba(248,113,113,0.3);
-    }
-    .status-dot.on{background:var(--green-light);border-color:rgba(52,211,153,0.3)}
-    .status-label{font-size:16px;font-weight:700}
-    .status-sub{font-size:12px;color:var(--text2);margin-top:2px}
-    .status-pill{
-      margin-left:auto;font-size:11px;font-weight:700;
-      padding:5px 12px;border-radius:20px;
-      background:var(--red-light);color:var(--red);white-space:nowrap;
-    }
-    .status-pill.on{background:var(--green-light);color:var(--green)}
-
-    /* ── FEATURES GRID ── */
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;min-height:100vh;padding-bottom:76px;overflow-x:hidden;font-size:15px;line-height:1.5}
+    .page{display:none}.page.active{display:block}
+    /* NAV */
+    .nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(15,15,15,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0)}
+    .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 0 8px;cursor:pointer;border:none;background:none;color:var(--text2);font-size:9.5px;gap:3px;letter-spacing:0.2px;transition:color .2s}
+    .nav-btn.active{color:var(--accent)}.nav-icon{font-size:21px;line-height:1}
+    /* HEADER */
+    .header{padding:24px 20px 16px;text-align:center}
+    .logo{font-size:30px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .logo span{background:linear-gradient(135deg,var(--accent),#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .tagline{font-size:13px;color:var(--text2);margin-top:3px}
+    /* CARDS */
+    .card{background:var(--card);border-radius:var(--r);border:1px solid var(--border)}
+    /* STATUS */
+    .status{margin:0 16px 12px;padding:14px 16px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);display:flex;align-items:center;gap:12px}
+    .status-dot{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:19px;background:var(--red-l);border:1.5px solid rgba(248,113,113,.3)}
+    .status-dot.on{background:var(--green-l);border-color:rgba(52,211,153,.3)}
+    .status-label{font-size:15px;font-weight:700}.status-sub{font-size:12px;color:var(--text2);margin-top:1px}
+    .status-pill{margin-left:auto;font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;background:var(--red-l);color:var(--red);white-space:nowrap}
+    .status-pill.on{background:var(--green-l);color:var(--green)}
+    /* FEATURES */
     .features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px 12px}
-    .feat{
-      background:var(--card);border-radius:var(--radius-sm);border:1px solid var(--border);
-      padding:14px 12px;
-    }
-    .feat-icon{font-size:22px;margin-bottom:6px}
-    .feat-title{font-size:13px;font-weight:700;margin-bottom:2px}
-    .feat-desc{font-size:11px;color:var(--text2);line-height:1.4}
-
-    /* ── BTN ── */
-    .btn{
-      width:100%;padding:15px;border-radius:var(--radius-sm);border:none;
-      font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.15s,transform 0.1s;
-      letter-spacing:0.2px;
-    }
-    .btn:active{opacity:0.85;transform:scale(0.99)}
-    .btn-primary{background:var(--accent);color:#fff}
-    .btn-outline{background:var(--accent-light);color:var(--accent);border:1px solid rgba(99,102,241,0.25)}
-
-    /* ── PAGE HEADER ── */
-    .ph{padding:24px 20px 16px}
-    .ph-title{font-size:24px;font-weight:800;letter-spacing:-0.5px}
-    .ph-sub{font-size:13px;color:var(--text2);margin-top:3px}
-
-    /* ── TABS ── */
-    .tabs{
-      display:flex;margin:0 16px 16px;
-      background:var(--card2);border-radius:var(--radius-sm);
-      padding:3px;gap:3px;border:1px solid var(--border);
-    }
-    .tab{
-      flex:1;padding:9px 8px;text-align:center;border-radius:10px;
-      font-size:13px;font-weight:600;cursor:pointer;
-      border:none;background:transparent;color:var(--text2);
-      transition:all 0.2s;
-    }
-    .tab.active{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.3)}
-
-    /* ── PLANS ── */
-    .plans-wrap{padding:0 16px;display:none}
-    .plans-wrap.active{display:block}
-
-    .plan{
-      background:var(--card);border-radius:var(--radius);border:1px solid var(--border);
-      padding:16px;margin-bottom:10px;cursor:pointer;
-      transition:border-color 0.15s,background 0.15s;
-      position:relative;overflow:hidden;
-    }
+    .feat{background:var(--card);border-radius:var(--rsm);border:1px solid var(--border);padding:13px 12px}
+    .feat-icon{font-size:20px;margin-bottom:5px}.feat-title{font-size:13px;font-weight:700;margin-bottom:2px}.feat-desc{font-size:11px;color:var(--text2);line-height:1.4}
+    /* BTN */
+    .btn{width:100%;padding:14px;border-radius:var(--rsm);border:none;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;letter-spacing:.2px}
+    .btn:active{opacity:.85;transform:scale(.99)}.btn-primary{background:var(--accent);color:#fff}.btn-outline{background:var(--accent-l);color:var(--accent);border:1px solid rgba(99,102,241,.25)}
+    /* PAGE HEADER */
+    .ph{padding:22px 20px 14px}.ph-title{font-size:23px;font-weight:800;letter-spacing:-.5px}.ph-sub{font-size:13px;color:var(--text2);margin-top:3px}
+    /* TABS */
+    .tabs{display:flex;margin:0 16px 14px;background:var(--card2);border-radius:var(--rsm);padding:3px;gap:3px;border:1px solid var(--border)}
+    .tab{flex:1;padding:8px;text-align:center;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text2);transition:all .2s}
+    .tab.active{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+    /* PLANS */
+    .plans-wrap{padding:0 16px;display:none}.plans-wrap.active{display:block}
+    .plan{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;position:relative;overflow:hidden}
     .plan:active{background:var(--card2)}
-    .plan.hot{border-color:rgba(99,102,241,0.4);background:linear-gradient(135deg,rgba(99,102,241,0.07),rgba(99,102,241,0.03))}
-    .plan-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-    .plan-name{font-size:17px;font-weight:700}
-    .plan-price{font-size:22px;font-weight:800;color:var(--accent)}
-    .plan-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .plan-tag{font-size:12px;color:var(--text2)}
-    .plan-stars{font-size:12px;color:var(--gold);font-weight:600}
-    .plan-badge{
-      position:absolute;top:0;right:0;
-      background:var(--accent);color:#fff;
-      font-size:10px;font-weight:800;padding:4px 12px;
-      border-radius:0 var(--radius) 0 var(--radius-sm);letter-spacing:0.5px;
-    }
-    .plan-save{font-size:12px;color:var(--green);font-weight:600}
-
-    /* ── SUB CARD ── */
-    .sub-card{
-      background:var(--card);border-radius:var(--radius);border:1px solid rgba(99,102,241,0.3);
-      padding:20px;margin-bottom:12px;
-    }
-    .sub-card-title{font-size:19px;font-weight:800;margin-bottom:4px}
-    .sub-card-desc{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5}
-    .sub-features{margin-bottom:16px}
-    .sub-feat{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:var(--text2)}
-    .sub-feat-icon{width:22px;height:22px;border-radius:6px;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-    .sub-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
-    .sub-price{font-size:36px;font-weight:900;letter-spacing:-1px}
-    .sub-period{font-size:14px;color:var(--text2)}
-    .sub-stars{font-size:13px;color:var(--gold);margin-bottom:16px;font-weight:500}
-
-    /* ── PROMO ── */
-    .promo-section{margin:0 16px 16px}
-    .section-label{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
+    .plan.hot{border-color:rgba(99,102,241,.4);background:linear-gradient(135deg,rgba(99,102,241,.07),rgba(99,102,241,.03))}
+    .plan-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+    .plan-name{font-size:16px;font-weight:700}.plan-price{font-size:21px;font-weight:800;color:var(--accent)}
+    .plan-meta{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+    .plan-tag{font-size:12px;color:var(--text2)}.plan-stars{font-size:12px;color:var(--gold);font-weight:600}.plan-save{font-size:12px;color:var(--green);font-weight:600}
+    .plan-badge{position:absolute;top:0;right:0;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:3px 11px;border-radius:0 var(--r) 0 var(--rsm);letter-spacing:.5px}
+    /* SUB CARD */
+    .sub-card{background:var(--card);border-radius:var(--r);border:1px solid rgba(99,102,241,.3);padding:18px;margin-bottom:12px}
+    .sub-card-title{font-size:18px;font-weight:800;margin-bottom:4px}.sub-card-desc{font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.5}
+    .sub-features{margin-bottom:14px}.sub-feat{display:flex;align-items:center;gap:9px;padding:4px 0;font-size:13px;color:var(--text2)}
+    .sub-feat-icon{width:21px;height:21px;border-radius:6px;background:var(--green-l);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+    .sub-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:3px}
+    .sub-price{font-size:34px;font-weight:900;letter-spacing:-1px}.sub-period{font-size:14px;color:var(--text2)}
+    .sub-stars{font-size:13px;color:var(--gold);margin-bottom:14px;font-weight:500}
+    /* PROMO */
+    .promo-section{margin:0 16px 14px}.section-label{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
     .promo-row{display:flex;gap:8px}
-    .promo-input{
-      flex:1;padding:13px 14px;border-radius:var(--radius-sm);
-      font-size:14px;font-weight:700;background:var(--card);
-      border:1px solid var(--border2);color:var(--text);
-      outline:none;letter-spacing:1.5px;text-transform:uppercase;
-    }
+    .promo-input{flex:1;padding:12px 14px;border-radius:var(--rsm);font-size:14px;font-weight:700;background:var(--card);border:1px solid var(--border2);color:var(--text);outline:none;letter-spacing:1.5px;text-transform:uppercase}
     .promo-input:focus{border-color:var(--accent)}
-    .promo-btn{
-      padding:13px 18px;border-radius:var(--radius-sm);border:none;
-      background:var(--accent);color:#fff;font-size:14px;font-weight:700;cursor:pointer;
-    }
-    .promo-result{margin-top:8px;font-size:13px;padding:10px 14px;border-radius:10px;display:none}
-    .promo-result.ok{background:var(--green-light);color:var(--green);border:1px solid rgba(52,211,153,0.2);display:block}
-    .promo-result.err{background:var(--red-light);color:var(--red);border:1px solid rgba(248,113,113,0.2);display:block}
-
-    /* ── SERVERS ── */
-    .servers{margin:0 16px 12px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px}
-    .servers-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px}
-    .server-list{display:flex;flex-wrap:wrap;gap:8px}
-    .server{
-      display:flex;align-items:center;gap:6px;
-      font-size:13px;font-weight:500;
-      padding:7px 12px;border-radius:20px;
-      background:var(--bg3);border:1px solid var(--border);
-    }
-    .server-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
-
-    /* ── INFO STRIP ── */
-    .info-strip{
-      margin:0 16px 12px;padding:13px 16px;
-      background:var(--card2);border-radius:var(--radius-sm);border:1px solid var(--border);
-      font-size:13px;color:var(--text2);line-height:1.5;text-align:center;
-    }
+    .promo-btn{padding:12px 16px;border-radius:var(--rsm);border:none;background:var(--accent);color:#fff;font-size:14px;font-weight:700;cursor:pointer}
+    .promo-result{margin-top:8px;font-size:13px;padding:9px 13px;border-radius:10px;display:none}
+    .promo-result.ok{background:var(--green-l);color:var(--green);border:1px solid rgba(52,211,153,.2);display:block}
+    .promo-result.err{background:var(--red-l);color:var(--red);border:1px solid rgba(248,113,113,.2);display:block}
+    /* COUNTDOWN */
+    .countdown{margin:0 16px 12px;background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(99,102,241,.05));border:1px solid rgba(99,102,241,.25);border-radius:var(--rsm);padding:12px 16px;display:flex;align-items:center;gap:12px}
+    .cd-icon{font-size:22px;flex-shrink:0}
+    .cd-text{font-size:13px;font-weight:600;flex:1}.cd-timer{font-size:16px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;min-width:70px;text-align:right}
+    /* SERVERS */
+    .servers{margin:0 16px 12px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:14px}
+    .servers-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:11px}
+    .server-list{display:flex;flex-wrap:wrap;gap:7px}
+    .server{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:6px 11px;border-radius:20px;background:var(--bg3);border:1px solid var(--border)}
+    .server-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+    /* INFO */
+    .info-strip{margin:0 16px 12px;padding:12px 14px;background:var(--card2);border-radius:var(--rsm);border:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.5;text-align:center}
     .info-strip strong{color:var(--text)}
-
-    /* ── REF ── */
-    .ref-hero{
-      margin:16px;background:var(--card);border-radius:var(--radius-lg);
-      border:1px solid var(--border);padding:28px 20px;text-align:center;
-    }
-    .ref-emoji{font-size:52px;margin-bottom:14px}
-    .ref-hero-title{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px}
-    .ref-hero-desc{font-size:14px;color:var(--text2);line-height:1.6}
-    .ref-bonus{
-      margin:0 16px 12px;display:flex;align-items:center;gap:14px;
-      background:var(--green-light);border:1px solid rgba(52,211,153,0.15);
-      border-radius:var(--radius-sm);padding:16px;
-    }
-    .ref-bonus-icon{font-size:32px;flex-shrink:0}
-    .ref-bonus-title{font-size:15px;font-weight:800;color:var(--green)}
-    .ref-bonus-desc{font-size:12px;color:var(--text2);margin-top:2px}
+    /* REF */
+    .ref-hero{margin:14px;background:var(--card);border-radius:var(--rlg);border:1px solid var(--border);padding:26px 20px;text-align:center}
+    .ref-emoji{font-size:48px;margin-bottom:12px}.ref-hero-title{font-size:21px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px}.ref-hero-desc{font-size:14px;color:var(--text2);line-height:1.6}
+    .ref-bonus{margin:0 16px 12px;display:flex;align-items:center;gap:12px;background:var(--green-l);border:1px solid rgba(52,211,153,.15);border-radius:var(--rsm);padding:14px}
+    .ref-bonus-icon{font-size:30px;flex-shrink:0}.ref-bonus-title{font-size:15px;font-weight:800;color:var(--green)}.ref-bonus-desc{font-size:12px;color:var(--text2);margin-top:2px}
     .ref-stats{display:flex;gap:8px;margin:0 16px 12px}
-    .ref-stat{
-      flex:1;background:var(--card);border:1px solid var(--border);
-      border-radius:var(--radius-sm);padding:16px;text-align:center;
-    }
-    .ref-stat-num{font-size:28px;font-weight:900;color:var(--accent);letter-spacing:-1px}
-    .ref-stat-label{font-size:11px;color:var(--text2);margin-top:3px}
+    .ref-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--rsm);padding:14px;text-align:center}
+    .ref-stat-num{font-size:26px;font-weight:900;color:var(--accent);letter-spacing:-1px}.ref-stat-label{font-size:11px;color:var(--text2);margin-top:3px}
     .ref-link-block{margin:0 16px 12px}
-    .ref-link-box{
-      display:flex;background:var(--card);border-radius:var(--radius-sm);
-      border:1px solid var(--border2);overflow:hidden;
-    }
-    .ref-link-text{flex:1;padding:13px 14px;font-size:12px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .ref-copy{padding:13px 18px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;white-space:nowrap}
-    .ref-steps{margin:0 16px 16px}
-    .ref-step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
-    .ref-step:last-child{border-bottom:none}
-    .ref-step-num{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .ref-step-title{font-size:14px;font-weight:700;margin-bottom:2px}
-    .ref-step-desc{font-size:12px;color:var(--text2);line-height:1.5}
-
-    /* ── PROFILE ── */
-    .profile-top{
-      display:flex;flex-direction:column;align-items:center;
-      padding:32px 20px 24px;
-      background:linear-gradient(180deg,rgba(99,102,241,0.06) 0%,transparent 100%);
-      border-bottom:1px solid var(--border);
-    }
-    .avatar{
-      width:88px;height:88px;border-radius:50%;
-      background:var(--card2);border:2px solid var(--border2);
-      display:flex;align-items:center;justify-content:center;
-      font-size:36px;margin-bottom:14px;overflow:hidden;
-    }
+    .ref-link-box{display:flex;background:var(--card);border-radius:var(--rsm);border:1px solid var(--border2);overflow:hidden}
+    .ref-link-text{flex:1;padding:12px 13px;font-size:12px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .ref-copy{padding:12px 16px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;white-space:nowrap}
+    .ref-steps{margin:0 16px 16px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:4px 16px}
+    .ref-step{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--border)}.ref-step:last-child{border-bottom:none}
+    .ref-step-num{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ref-step-title{font-size:14px;font-weight:700;margin-bottom:2px}.ref-step-desc{font-size:12px;color:var(--text2);line-height:1.5}
+    /* PROFILE */
+    .profile-top{display:flex;flex-direction:column;align-items:center;padding:28px 20px 22px;background:linear-gradient(180deg,rgba(99,102,241,.06) 0%,transparent 100%);border-bottom:1px solid var(--border)}
+    .avatar{width:84px;height:84px;border-radius:50%;background:var(--card2);border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:34px;margin-bottom:12px;overflow:hidden}
     .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-    .prof-name{font-size:20px;font-weight:800;letter-spacing:-0.3px}
-    .prof-id{font-size:12px;color:var(--text2);margin-top:3px}
-    .prof-badge{
-      margin-top:10px;padding:6px 18px;border-radius:20px;
-      font-size:12px;font-weight:700;
-      background:var(--red-light);color:var(--red);
-    }
-    .prof-badge.ok{background:var(--green-light);color:var(--green)}
-    .menu-section{margin:16px}
-    .menu-group{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
-    .menu-item{
-      display:flex;align-items:center;gap:12px;padding:15px 16px;
-      cursor:pointer;border:none;background:transparent;
-      width:100%;text-align:left;color:var(--text);
-      transition:background 0.1s;
-    }
-    .menu-item:not(:last-child){border-bottom:1px solid var(--border)}
-    .menu-item:active{background:var(--bg3)}
-    .mi-icon{
-      width:32px;height:32px;border-radius:9px;
-      background:var(--accent-light);display:flex;align-items:center;
-      justify-content:center;font-size:15px;flex-shrink:0;
-    }
-    .mi-text{flex:1;font-size:15px;font-weight:500}
-    .mi-arrow{color:var(--text3);font-size:18px}
-    .mi-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px;background:var(--accent-light);color:var(--accent)}
-
-    /* ── PAYMENT MODAL ── */
-    .pay-overlay{
-      display:none;position:fixed;inset:0;z-index:300;
-      background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    }
+    .prof-name{font-size:19px;font-weight:800;letter-spacing:-.3px}.prof-id{font-size:12px;color:var(--text2);margin-top:2px}
+    .prof-badge{margin-top:9px;padding:5px 16px;border-radius:20px;font-size:12px;font-weight:700;background:var(--red-l);color:var(--red)}
+    .prof-badge.ok{background:var(--green-l);color:var(--green)}
+    .menu-section{margin:14px}
+    .menu-group{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:9px}
+    .menu-item{display:flex;align-items:center;gap:12px;padding:14px 15px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;color:var(--text);transition:background .1s}
+    .menu-item:not(:last-child){border-bottom:1px solid var(--border)}.menu-item:active{background:var(--bg3)}
+    .mi-icon{width:31px;height:31px;border-radius:9px;background:var(--accent-l);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .mi-text{flex:1;font-size:15px;font-weight:500}.mi-arrow{color:var(--text3);font-size:18px}
+    .mi-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;background:var(--accent-l);color:var(--accent)}
+    /* SETUP */
+    .setup-hero{margin:14px 16px 12px;background:linear-gradient(135deg,rgba(6,182,212,.08),rgba(6,182,212,.03));border:1px solid rgba(6,182,212,.2);border-radius:var(--r);padding:18px;text-align:center}
+    .setup-hero-icon{font-size:40px;margin-bottom:10px}
+    .setup-hero-title{font-size:18px;font-weight:800;margin-bottom:4px}
+    .setup-hero-desc{font-size:13px;color:var(--text2);line-height:1.5}
+    .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px 14px}
+    .platform-card{background:var(--card);border-radius:var(--rsm);border:1px solid var(--border);padding:16px 12px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+    .platform-card:active{background:var(--card2)}.platform-card.selected{border-color:var(--cyan)}
+    .plat-icon{font-size:28px;margin-bottom:6px}.plat-name{font-size:13px;font-weight:700}.plat-hint{font-size:11px;color:var(--text2);margin-top:2px}
+    .guide-panel{margin:0 16px 14px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:16px;display:none}
+    .guide-panel.active{display:block}
+    .guide-title{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .guide-step{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+    .guide-step-num{width:26px;height:26px;border-radius:50%;background:var(--cyan-l);border:1.5px solid var(--cyan);color:var(--cyan);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .guide-step-text{font-size:13px;line-height:1.6;color:var(--text2)}.guide-step-text strong{color:var(--text)}
+    .app-badge{display:inline-block;background:var(--bg3);border:1px solid var(--border2);padding:3px 10px;border-radius:8px;font-size:12px;font-weight:700;margin-top:4px}
+    .guide-note{background:var(--cyan-l);border:1px solid rgba(6,182,212,.2);border-radius:10px;padding:10px 13px;font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5}
+    /* PAY MODAL */
+    .pay-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.7);backdrop-filter:blur(10px)}
     .pay-overlay.open{display:flex;align-items:flex-end}
-    .pay-sheet{
-      width:100%;background:var(--bg2);
-      border-radius:24px 24px 0 0;
-      border-top:1px solid var(--border2);
-      padding-bottom:max(env(safe-area-inset-bottom),20px);
-    }
-    .drag-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:14px auto 0}
-    .pay-head{padding:20px 20px 0;text-align:center}
-    .pay-head-title{font-size:18px;font-weight:800;letter-spacing:-0.3px}
-    .pay-head-plan{font-size:14px;color:var(--text2);margin-top:4px}
-    .pay-head-price{font-size:28px;font-weight:900;letter-spacing:-1px;margin-top:6px}
-    .pay-divider{height:1px;background:var(--border);margin:18px 20px}
-    .pay-method{
-      display:flex;align-items:center;gap:14px;
-      margin:0 16px 10px;padding:18px;
-      border-radius:var(--radius);border:1px solid var(--border2);
-      background:var(--card);cursor:pointer;
-      transition:border-color 0.15s,background 0.15s;
-    }
+    .pay-sheet{width:100%;background:var(--bg2);border-radius:24px 24px 0 0;border-top:1px solid var(--border2);padding-bottom:max(env(safe-area-inset-bottom),20px)}
+    .drag-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:13px auto 0}
+    .pay-head{padding:18px 20px 0;text-align:center}
+    .pay-head-title{font-size:17px;font-weight:800;letter-spacing:-.3px}
+    .pay-head-plan{font-size:14px;color:var(--text2);margin-top:3px}
+    .pay-head-price{font-size:27px;font-weight:900;letter-spacing:-1px;margin-top:5px}
+    .pay-divider{height:1px;background:var(--border);margin:16px 20px}
+    .pay-method{display:flex;align-items:center;gap:13px;margin:0 16px 9px;padding:16px;border-radius:var(--r);border:1px solid var(--border2);background:var(--card);cursor:pointer;transition:border-color .15s}
     .pay-method:active{background:var(--card2)}
-    .pay-method-icon{
-      width:48px;height:48px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:24px;flex-shrink:0;
-    }
-    .pm-stars .pay-method-icon{background:var(--gold-light)}
-    .pm-crypto .pay-method-icon{background:rgba(6,182,212,0.1)}
-    .pay-method-name{font-size:16px;font-weight:700}
-    .pay-method-hint{font-size:12px;color:var(--text2);margin-top:2px}
+    .pay-method-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .pm-stars .pay-method-icon{background:var(--gold-l)}.pm-crypto .pay-method-icon{background:var(--cyan-l)}
+    .pay-method-name{font-size:15px;font-weight:700}.pay-method-hint{font-size:12px;color:var(--text2);margin-top:2px}
     .pay-method-arrow{margin-left:auto;color:var(--text3);font-size:20px}
-    .pay-cancel{
-      display:block;text-align:center;padding:14px 20px 2px;
-      color:var(--text2);font-size:15px;cursor:pointer;
-      border:none;background:none;width:100%;
-    }
-
-    /* ── MODALS ── */
-    .modal-ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px)}
+    .pay-cancel{display:block;text-align:center;padding:13px 20px 2px;color:var(--text2);font-size:15px;cursor:pointer;border:none;background:none;width:100%}
+    /* MODALS */
+    .modal-ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);backdrop-filter:blur(6px)}
     .modal-ov.open{display:flex;align-items:flex-end}
     .modal-sheet{width:100%;background:var(--bg2);border-radius:24px 24px 0 0;max-height:85vh;overflow-y:auto;border-top:1px solid var(--border2)}
-    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 4px}
-    .modal-title{font-size:18px;font-weight:800}
-    .modal-close{background:var(--bg3);border:none;color:var(--text2);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px}
-    .modal-body{padding:4px 20px 32px;font-size:13px;color:var(--text2);line-height:1.8}
-    .modal-body h3{font-size:14px;font-weight:700;color:var(--text);margin:16px 0 5px}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 4px}
+    .modal-title{font-size:17px;font-weight:800}
+    .modal-close{background:var(--bg3);border:none;color:var(--text2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:15px}
+    .modal-body{padding:4px 20px 30px;font-size:13px;color:var(--text2);line-height:1.8}
+    .modal-body h3{font-size:14px;font-weight:700;color:var(--text);margin:14px 0 4px}
   </style>
 </head>
 <body>
 
 <!-- HOME -->
 <div class="page active" id="page-home">
-  <div class="header">
-    <div class="logo">VPN<span>Itamani</span></div>
-    <div class="tagline">Быстро · Надёжно · Без ограничений</div>
-  </div>
+  <div class="header"><div class="logo">VPN<span>Itamani</span></div><div class="tagline">Быстро · Надёжно · Без ограничений</div></div>
   <div class="status">
     <div class="status-dot" id="statusDot">🔒</div>
-    <div>
-      <div class="status-label">Нет подписки</div>
-      <div class="status-sub">Выберите тариф для подключения</div>
-    </div>
+    <div><div class="status-label">Нет подписки</div><div class="status-sub" id="statusSub">Выберите тариф для подключения</div></div>
     <div class="status-pill" id="statusPill">Неактивно</div>
   </div>
   <div class="features">
-    <div class="feat">
-      <div class="feat-icon">♾️</div>
-      <div class="feat-title">Безлимит</div>
-      <div class="feat-desc">Неограниченный трафик</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">📱</div>
-      <div class="feat-title">10 устройств</div>
-      <div class="feat-desc">Одна подписка</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">⚡</div>
-      <div class="feat-title">Высокая скорость</div>
-      <div class="feat-desc">4K, игры, звонки</div>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">🌍</div>
-      <div class="feat-title">EU / USA</div>
-      <div class="feat-desc">Серверы по всему миру</div>
-    </div>
+    <div class="feat"><div class="feat-icon">♾️</div><div class="feat-title">Безлимит</div><div class="feat-desc">Неограниченный трафик</div></div>
+    <div class="feat"><div class="feat-icon">📱</div><div class="feat-title">10 устройств</div><div class="feat-desc">Одна подписка</div></div>
+    <div class="feat"><div class="feat-icon">⚡</div><div class="feat-title">Высокая скорость</div><div class="feat-desc">4K, игры, звонки</div></div>
+    <div class="feat"><div class="feat-icon">🌍</div><div class="feat-title">EU / USA</div><div class="feat-desc">Серверы по всему миру</div></div>
   </div>
-  <div style="margin:0 16px 12px">
-    <button class="btn btn-primary" onclick="switchPage('payment')">Купить подписку</button>
-  </div>
+  <div style="margin:0 16px 12px"><button class="btn btn-primary" onclick="switchPage('payment')">Купить подписку</button></div>
   <div class="servers">
     <div class="servers-title">Статус серверов</div>
     <div class="server-list">
@@ -402,9 +197,11 @@
 
 <!-- PAYMENT -->
 <div class="page" id="page-payment">
-  <div class="ph">
-    <div class="ph-title">Оплата</div>
-    <div class="ph-sub">Выберите тариф и способ оплаты</div>
+  <div class="ph"><div class="ph-title">Оплата</div><div class="ph-sub">Выберите тариф и способ оплаты</div></div>
+  <div class="countdown">
+    <div class="cd-icon">🔥</div>
+    <div class="cd-text">Скидка 20% истекает через</div>
+    <div class="cd-timer" id="cdTimer">23:59:59</div>
   </div>
   <div class="promo-section">
     <div class="section-label">Промокод</div>
@@ -418,7 +215,6 @@
     <button class="tab active" onclick="switchTab('sub')">Подписка</button>
     <button class="tab" onclick="switchTab('once')">Разовая</button>
   </div>
-
   <div class="plans-wrap active" id="tab-sub">
     <div class="sub-card">
       <div class="sub-card-title">Автоподписка</div>
@@ -428,16 +224,12 @@
         <div class="sub-feat"><div class="sub-feat-icon">✓</div>До 10 устройств одновременно</div>
         <div class="sub-feat"><div class="sub-feat-icon">✓</div>Автопродление — не надо следить</div>
       </div>
-      <div class="sub-price-row">
-        <div class="sub-price">250 ₽</div>
-        <div class="sub-period">/ месяц</div>
-      </div>
+      <div class="sub-price-row"><div class="sub-price">250 ₽</div><div class="sub-period">/ месяц</div></div>
       <div class="sub-stars">или 150 ⭐ Telegram Stars</div>
       <button class="btn btn-primary" onclick="buyPlan('sub_month',250,'Подписка — 1 месяц')">Оформить подписку</button>
     </div>
     <div class="info-strip"><strong>Безлимит · 10 устройств · Серверы EU/USA</strong><br>РКН блокирует — мы разблокируем</div>
   </div>
-
   <div class="plans-wrap" id="tab-once">
     <div class="plan" onclick="buyPlan('day',20,'День')">
       <div class="plan-top"><div class="plan-name">День</div><div class="plan-price">20 ₽</div></div>
@@ -470,19 +262,9 @@
 
 <!-- REF -->
 <div class="page" id="page-ref">
-  <div class="ref-hero">
-    <div class="ref-emoji">🎁</div>
-    <div class="ref-hero-title">Зарабатывай с друзьями</div>
-    <div class="ref-hero-desc">Приглашай друзей и получай 15%<br>с каждой их покупки</div>
-  </div>
-  <div style="height:12px"></div>
-  <div class="ref-bonus">
-    <div class="ref-bonus-icon">💰</div>
-    <div>
-      <div class="ref-bonus-title">+15% с каждой покупки</div>
-      <div class="ref-bonus-desc">Начисляется сразу после оплаты друга</div>
-    </div>
-  </div>
+  <div class="ref-hero"><div class="ref-emoji">🎁</div><div class="ref-hero-title">Зарабатывай с друзьями</div><div class="ref-hero-desc">Приглашай друзей и получай 15%<br>с каждой их покупки</div></div>
+  <div style="height:10px"></div>
+  <div class="ref-bonus"><div class="ref-bonus-icon">💰</div><div><div class="ref-bonus-title">+15% с каждой покупки</div><div class="ref-bonus-desc">Начисляется сразу после оплаты друга</div></div></div>
   <div class="ref-stats">
     <div class="ref-stat"><div class="ref-stat-num" id="refCount">0</div><div class="ref-stat-label">Приглашено</div></div>
     <div class="ref-stat"><div class="ref-stat-num" id="refEarned">0</div><div class="ref-stat-label">Заработано ₽</div></div>
@@ -495,20 +277,52 @@
     </div>
   </div>
   <div class="section-label" style="margin:0 16px 8px">Как это работает</div>
-  <div class="ref-steps" style="background:var(--card);border-radius:var(--radius);border:1px solid var(--border);margin:0 16px 16px;padding:4px 16px">
-    <div class="ref-step">
-      <div class="ref-step-num">1</div>
-      <div><div class="ref-step-title">Поделитесь ссылкой</div><div class="ref-step-desc">Отправьте другу в любом мессенджере</div></div>
+  <div class="ref-steps">
+    <div class="ref-step"><div class="ref-step-num">1</div><div><div class="ref-step-title">Поделитесь ссылкой</div><div class="ref-step-desc">Отправьте другу в любом мессенджере</div></div></div>
+    <div class="ref-step"><div class="ref-step-num">2</div><div><div class="ref-step-title">Друг покупает VPN</div><div class="ref-step-desc">Переходит по ссылке и оформляет тариф</div></div></div>
+    <div class="ref-step"><div class="ref-step-num">3</div><div><div class="ref-step-title">Вы получаете 15%</div><div class="ref-step-desc">Мгновенно зачисляется на баланс</div></div></div>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div class="page" id="page-setup">
+  <div class="ph"><div class="ph-title">Настройка</div><div class="ph-sub">Инструкция по подключению VPN</div></div>
+  <div class="setup-hero">
+    <div class="setup-hero-icon">🔑</div>
+    <div class="setup-hero-title">Выберите платформу</div>
+    <div class="setup-hero-desc">Пошаговая инструкция по настройке за 2 минуты</div>
+  </div>
+  <div class="platform-grid">
+    <div class="platform-card" id="plat-ios" onclick="showGuide('ios')">
+      <div class="plat-icon">📱</div>
+      <div class="plat-name">iOS</div>
+      <div class="plat-hint">iPhone / iPad</div>
     </div>
-    <div class="ref-step">
-      <div class="ref-step-num">2</div>
-      <div><div class="ref-step-title">Друг покупает VPN</div><div class="ref-step-desc">Переходит по ссылке и оформляет тариф</div></div>
+    <div class="platform-card" id="plat-android" onclick="showGuide('android')">
+      <div class="plat-icon">🤖</div>
+      <div class="plat-name">Android</div>
+      <div class="plat-hint">Телефон / планшет</div>
     </div>
-    <div class="ref-step">
-      <div class="ref-step-num">3</div>
-      <div><div class="ref-step-title">Вы получаете 15%</div><div class="ref-step-desc">Мгновенно зачисляется на баланс</div></div>
+    <div class="platform-card" id="plat-windows" onclick="showGuide('windows')">
+      <div class="plat-icon">💻</div>
+      <div class="plat-name">Windows</div>
+      <div class="plat-hint">ПК / ноутбук</div>
+    </div>
+    <div class="platform-card" id="plat-mac" onclick="showGuide('mac')">
+      <div class="plat-icon">🍎</div>
+      <div class="plat-name">macOS</div>
+      <div class="plat-hint">MacBook / iMac</div>
     </div>
   </div>
+  <div class="guide-panel" id="guidePanel">
+    <div class="guide-title" id="guideTitle">📱 iOS</div>
+    <div id="guideSteps"></div>
+    <div style="margin-top:4px">
+      <button class="btn btn-primary" onclick="getMyKey()" style="margin-bottom:8px">🔑 Получить мой ключ</button>
+      <button class="btn btn-outline" onclick="openSupport()">💬 Нужна помощь?</button>
+    </div>
+  </div>
+  <div class="info-strip" style="margin:0 16px 16px">Возникли проблемы с настройкой? Напишите в поддержку — поможем в течение 5 минут</div>
 </div>
 
 <!-- PROFILE -->
@@ -521,42 +335,31 @@
   </div>
   <div class="menu-section">
     <div class="menu-group">
-      <button class="menu-item" onclick="openPromo()">
-        <div class="mi-icon">🏷️</div><div class="mi-text">Промокод</div><div class="mi-arrow">›</div>
-      </button>
-      <button class="menu-item">
-        <div class="mi-icon">📋</div><div class="mi-text">История покупок</div><div class="mi-arrow">›</div>
-      </button>
+      <button class="menu-item" onclick="openPromo()"><div class="mi-icon">🏷️</div><div class="mi-text">Промокод</div><div class="mi-arrow">›</div></button>
+      <button class="menu-item"><div class="mi-icon">📋</div><div class="mi-text">История покупок</div><div class="mi-arrow">›</div></button>
     </div>
     <div class="menu-group">
-      <button class="menu-item" onclick="switchPage('ref')">
-        <div class="mi-icon">🎁</div><div class="mi-text">Реферальная программа</div>
-        <div class="mi-badge">+15%</div><div class="mi-arrow">›</div>
-      </button>
+      <button class="menu-item" onclick="switchPage('ref')"><div class="mi-icon">🎁</div><div class="mi-text">Реферальная программа</div><div class="mi-badge">+15%</div><div class="mi-arrow">›</div></button>
+      <button class="menu-item" onclick="switchPage('setup')"><div class="mi-icon">📖</div><div class="mi-text">Инструкция по настройке</div><div class="mi-arrow">›</div></button>
     </div>
     <div class="menu-group">
-      <button class="menu-item" onclick="openSupport()">
-        <div class="mi-icon">💬</div><div class="mi-text">Поддержка</div><div class="mi-arrow">›</div>
-      </button>
-      <button class="menu-item" onclick="openModal('offer')">
-        <div class="mi-icon">📄</div><div class="mi-text">Публичная оферта</div><div class="mi-arrow">›</div>
-      </button>
-      <button class="menu-item" onclick="openModal('privacy')">
-        <div class="mi-icon">🔒</div><div class="mi-text">Конфиденциальность</div><div class="mi-arrow">›</div>
-      </button>
+      <button class="menu-item" onclick="openSupport()"><div class="mi-icon">💬</div><div class="mi-text">Поддержка</div><div class="mi-arrow">›</div></button>
+      <button class="menu-item" onclick="openModal('offer')"><div class="mi-icon">📄</div><div class="mi-text">Публичная оферта</div><div class="mi-arrow">›</div></button>
+      <button class="menu-item" onclick="openModal('privacy')"><div class="mi-icon">🔒</div><div class="mi-text">Конфиденциальность</div><div class="mi-arrow">›</div></button>
     </div>
   </div>
 </div>
 
 <!-- NAV -->
 <nav class="nav">
-  <button class="nav-btn active" id="nav-home" onclick="switchPage('home')"><span class="nav-icon">🏠</span>Главная</button>
-  <button class="nav-btn" id="nav-payment" onclick="switchPage('payment')"><span class="nav-icon">💳</span>Оплата</button>
-  <button class="nav-btn" id="nav-ref" onclick="switchPage('ref')"><span class="nav-icon">🎁</span>Рефералы</button>
-  <button class="nav-btn" id="nav-profile" onclick="switchPage('profile')"><span class="nav-icon">👤</span>Профиль</button>
+  <button class="nav-btn active" id="nav-home"    onclick="switchPage('home')">   <span class="nav-icon">🏠</span>Главная</button>
+  <button class="nav-btn"        id="nav-payment" onclick="switchPage('payment')"><span class="nav-icon">💳</span>Оплата</button>
+  <button class="nav-btn"        id="nav-ref"     onclick="switchPage('ref')">    <span class="nav-icon">🎁</span>Рефералы</button>
+  <button class="nav-btn"        id="nav-setup"   onclick="switchPage('setup')">  <span class="nav-icon">📖</span>Настройка</button>
+  <button class="nav-btn"        id="nav-profile" onclick="switchPage('profile')"><span class="nav-icon">👤</span>Профиль</button>
 </nav>
 
-<!-- PAYMENT MODAL -->
+<!-- PAY MODAL -->
 <div class="pay-overlay" id="payModal" onclick="closePayModal(event)">
   <div class="pay-sheet">
     <div class="drag-handle"></div>
@@ -568,18 +371,12 @@
     <div class="pay-divider"></div>
     <div class="pay-method pm-stars" onclick="payWithStars()">
       <div class="pay-method-icon">⭐</div>
-      <div>
-        <div class="pay-method-name">Telegram Stars</div>
-        <div class="pay-method-hint">Мгновенно · Без комиссий · <span id="payStarsHint">150 ⭐</span></div>
-      </div>
+      <div><div class="pay-method-name">Telegram Stars</div><div class="pay-method-hint">Мгновенно · Без комиссий · <span id="payStarsHint">150 ⭐</span></div></div>
       <div class="pay-method-arrow">›</div>
     </div>
     <div class="pay-method pm-crypto" onclick="payWithCrypto()">
       <div class="pay-method-icon">💎</div>
-      <div>
-        <div class="pay-method-name">Криптовалюта</div>
-        <div class="pay-method-hint">TON · USDT · Анонимно</div>
-      </div>
+      <div><div class="pay-method-name">Криптовалюта</div><div class="pay-method-hint">TON · USDT · Анонимно</div></div>
       <div class="pay-method-arrow">›</div>
     </div>
     <button class="pay-cancel" onclick="closePayModalById()">Отмена</button>
@@ -590,10 +387,7 @@
 <div class="modal-ov" id="modal-offer" onclick="closeModal(event,'offer')">
   <div class="modal-sheet">
     <div class="drag-handle"></div>
-    <div class="modal-head">
-      <div class="modal-title">Публичная оферта</div>
-      <button class="modal-close" onclick="closeModalById('offer')">✕</button>
-    </div>
+    <div class="modal-head"><div class="modal-title">Публичная оферта</div><button class="modal-close" onclick="closeModalById('offer')">✕</button></div>
     <div class="modal-body">
       <p>Настоящая оферта является официальным предложением на оказание услуг доступа к VPN-сервису <strong>VPN Itamani</strong>.</p>
       <h3>Предмет договора</h3><p>Предоставление доступа к VPN-сервису в течение оплаченного периода.</p>
@@ -604,15 +398,11 @@
     </div>
   </div>
 </div>
-
 <!-- MODAL: Privacy -->
 <div class="modal-ov" id="modal-privacy" onclick="closeModal(event,'privacy')">
   <div class="modal-sheet">
     <div class="drag-handle"></div>
-    <div class="modal-head">
-      <div class="modal-title">Конфиденциальность</div>
-      <button class="modal-close" onclick="closeModalById('privacy')">✕</button>
-    </div>
+    <div class="modal-head"><div class="modal-title">Конфиденциальность</div><button class="modal-close" onclick="closeModalById('privacy')">✕</button></div>
     <div class="modal-body">
       <h3>Что собираем</h3><p>Telegram ID, имя — при запуске Mini App. Платёжные данные не храним.</p>
       <h3>VPN и логи</h3><p>Логи активности не ведём. Фиксируем только факт подключения и объём трафика.</p>
@@ -623,76 +413,128 @@
 </div>
 
 <script>
-  const tg=window.Telegram?.WebApp;
-  if(tg){
-    tg.ready();tg.expand();
-    tg.setHeaderColor('#0f0f0f');tg.setBackgroundColor('#0f0f0f');
-    const u=tg.initDataUnsafe?.user;
-    if(u){
-      document.getElementById('profileName').textContent=(u.first_name||'')+(u.last_name?' '+u.last_name:'');
-      document.getElementById('profileId').textContent='ID: '+u.id;
-      const av=document.getElementById('avatarEl');
-      if(u.photo_url){av.innerHTML='<img src="'+u.photo_url+'" alt="">';}
-      else{av.textContent=(u.first_name||'?')[0].toUpperCase();}
-      document.getElementById('refLink').textContent='https://t.me/Vpnitamani_bot?start=ref_'+u.id;
-    }
+const tg=window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();tg.setHeaderColor('#0f0f0f');tg.setBackgroundColor('#0f0f0f');
+  const u=tg.initDataUnsafe?.user;
+  if(u){
+    document.getElementById('profileName').textContent=(u.first_name||'')+(u.last_name?' '+u.last_name:'');
+    document.getElementById('profileId').textContent='ID: '+u.id;
+    const av=document.getElementById('avatarEl');
+    if(u.photo_url)av.innerHTML='<img src="'+u.photo_url+'" alt="">';
+    else av.textContent=(u.first_name||'?')[0].toUpperCase();
+    document.getElementById('refLink').textContent='https://t.me/Vpnitamani_bot?start=ref_'+u.id;
   }
-
-  const STARS={sub_month:150,day:50,week:100,month:150,'3month':400,'6month':700,year:1100};
-  let curPlan=null,curPrice=0,curName='';
-
-  function switchPage(p){
-    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
-    document.getElementById('page-'+p).classList.add('active');
-    document.getElementById('nav-'+p).classList.add('active');
-    window.scrollTo(0,0);
+}
+const STARS={sub_month:150,day:50,week:100,month:150,'3month':400,'6month':700,year:1100};
+let curPlan=null,curPrice=0,curName='';
+function switchPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  const nb=document.getElementById('nav-'+p);
+  if(nb)nb.classList.add('active');
+  window.scrollTo(0,0);
+}
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((x,i)=>x.classList.toggle('active',(i===0&&t==='sub')||(i===1&&t==='once')));
+  document.getElementById('tab-sub').classList.toggle('active',t==='sub');
+  document.getElementById('tab-once').classList.toggle('active',t==='once');
+}
+function buyPlan(plan,price,name){
+  curPlan=plan;curPrice=price;curName=name;
+  const s=STARS[plan]||Math.round(price/2);
+  document.getElementById('payPlanLabel').textContent=name;
+  document.getElementById('payPlanBig').textContent=price+' ₽';
+  document.getElementById('payStarsHint').textContent=s+' ⭐';
+  document.getElementById('payModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closePayModal(e){if(e.target===document.getElementById('payModal'))closePayModalById();}
+function closePayModalById(){document.getElementById('payModal').classList.remove('open');document.body.style.overflow='';}
+function payWithStars(){
+  closePayModalById();
+  const s=STARS[curPlan]||Math.round(curPrice/2);
+  if(tg)tg.sendData(JSON.stringify({action:'buy_stars',plan:curPlan,stars:s,name:curName}));
+}
+function payWithCrypto(){
+  closePayModalById();
+  if(tg)tg.sendData(JSON.stringify({action:'crypto_pay',plan:curPlan,rub:curPrice,name:curName}));
+}
+function applyPromo(){
+  const code=document.getElementById('promoInput').value.trim().toUpperCase();
+  const r=document.getElementById('promoResult');
+  if(!code){r.className='promo-result err';r.textContent='Введите промокод';return;}
+  if(tg){tg.sendData(JSON.stringify({action:'promo',code}));r.className='promo-result ok';r.textContent='⏳ Проверяем...';}
+  else{r.className='promo-result err';r.textContent='Открой в Telegram';}
+}
+function openPromo(){switchPage('payment');setTimeout(()=>document.getElementById('promoInput').focus(),300);}
+function copyRef(){
+  const t=document.getElementById('refLink').textContent;
+  const b=document.getElementById('copyBtn');
+  navigator.clipboard?.writeText(t).then(()=>{b.textContent='✓ Скопировано';setTimeout(()=>b.textContent='Копировать',2500);});
+}
+function openSupport(){if(tg)tg.openTelegramLink('https://t.me/vpnitamani');else window.open('https://t.me/vpnitamani','_blank');}
+function openModal(id){document.getElementById('modal-'+id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModalById(id){document.getElementById('modal-'+id).classList.remove('open');document.body.style.overflow='';}
+function closeModal(e,id){if(e.target===document.getElementById('modal-'+id))closeModalById(id);}
+function getMyKey(){if(tg)tg.sendData(JSON.stringify({action:'get_vpn'}));}
+document.getElementById('promoInput').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+// Countdown timer — resets every 24h, stored in memory
+(function(){
+  const key='cd_end';
+  let end=localStorage.getItem(key);
+  if(!end||Date.now()>parseInt(end)){
+    end=Date.now()+24*3600*1000;
+    try{localStorage.setItem(key,end);}catch(e){}
   }
-  function switchTab(t){
-    document.querySelectorAll('.tab').forEach((x,i)=>x.classList.toggle('active',(i===0&&t==='sub')||(i===1&&t==='once')));
-    document.getElementById('tab-sub').classList.toggle('active',t==='sub');
-    document.getElementById('tab-once').classList.toggle('active',t==='once');
+  function tick(){
+    const left=Math.max(0,parseInt(end)-Date.now());
+    const h=Math.floor(left/3600000),m=Math.floor(left%3600000/60000),s=Math.floor(left%60000/1000);
+    document.getElementById('cdTimer').textContent=
+      String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    if(left>0)setTimeout(tick,1000);
   }
-  function buyPlan(plan,price,name){
-    curPlan=plan;curPrice=price;curName=name;
-    const s=STARS[plan]||Math.round(price/2);
-    document.getElementById('payPlanLabel').textContent=name;
-    document.getElementById('payPlanBig').textContent=price+' ₽';
-    document.getElementById('payStarsHint').textContent=s+' ⭐';
-    document.getElementById('payModal').classList.add('open');
-    document.body.style.overflow='hidden';
-  }
-  function closePayModal(e){if(e.target===document.getElementById('payModal'))closePayModalById();}
-  function closePayModalById(){document.getElementById('payModal').classList.remove('open');document.body.style.overflow='';}
-  function payWithStars(){
-    closePayModalById();
-    const s=STARS[curPlan]||Math.round(curPrice/2);
-    if(tg)tg.sendData(JSON.stringify({action:'buy_stars',plan:curPlan,stars:s,name:curName}));
-    else alert('Stars: '+s+' ⭐');
-  }
-  function payWithCrypto(){
-    closePayModalById();
-    if(tg)tg.sendData(JSON.stringify({action:'crypto_pay',plan:curPlan,rub:curPrice,name:curName}));
-    else alert('Крипто');
-  }
-  function applyPromo(){
-    const code=document.getElementById('promoInput').value.trim().toUpperCase();
-    const r=document.getElementById('promoResult');
-    if(!code){r.className='promo-result err';r.textContent='Введите промокод';return;}
-    if(tg){tg.sendData(JSON.stringify({action:'promo',code}));r.className='promo-result ok';r.textContent='⏳ Проверяем...';}
-    else{r.className='promo-result err';r.textContent='Открой в Telegram';}
-  }
-  function openPromo(){switchPage('payment');setTimeout(()=>document.getElementById('promoInput').focus(),300);}
-  function copyRef(){
-    const t=document.getElementById('refLink').textContent;
-    const b=document.getElementById('copyBtn');
-    navigator.clipboard?.writeText(t).then(()=>{b.textContent='✓ Скопировано';setTimeout(()=>b.textContent='Копировать',2500);});
-  }
-  function openSupport(){if(tg)tg.openTelegramLink('https://t.me/vpnitamani');else window.open('https://t.me/vpnitamani','_blank');}
-  function openModal(id){document.getElementById('modal-'+id).classList.add('open');document.body.style.overflow='hidden';}
-  function closeModalById(id){document.getElementById('modal-'+id).classList.remove('open');document.body.style.overflow='';}
-  function closeModal(e,id){if(e.target===document.getElementById('modal-'+id))closeModalById(id);}
-  document.getElementById('promoInput').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+  tick();
+})();
+// Setup guides
+const GUIDES={
+  ios:{title:'📱 iOS (iPhone / iPad)',steps:[
+    {t:'Установите приложение',d:'Скачайте <strong>Streisand</strong> или <strong>FoXray</strong> из App Store — бесплатно'},
+    {t:'Скопируйте ключ',d:'Получите ключ у бота командой <strong>/myvpn</strong> и скопируйте его'},
+    {t:'Добавьте сервер',d:'Откройте приложение → нажмите <strong>+</strong> → выберите <strong>Вставить из буфера</strong>'},
+    {t:'Подключитесь',d:'Нажмите на сервер и включите переключатель — VPN активен 🎉'},
+  ]},
+  android:{title:'🤖 Android',steps:[
+    {t:'Установите v2rayNG',d:'Скачайте <strong>v2rayNG</strong> из Google Play или как APK с официального сайта'},
+    {t:'Скопируйте ключ',d:'Получите ключ у бота командой <strong>/myvpn</strong>'},
+    {t:'Добавьте сервер',d:'Нажмите <strong>+</strong> → <strong>Ввести URL вручную</strong> → вставьте ключ'},
+    {t:'Подключитесь',d:'Нажмите кнопку ▶️ внизу — VPN запущен 🎉'},
+  ]},
+  windows:{title:'💻 Windows',steps:[
+    {t:'Скачайте Hiddify',d:'Загрузите <strong>Hiddify</strong> с GitHub — бесплатный клиент с удобным интерфейсом'},
+    {t:'Скопируйте ключ',d:'Получите ключ у бота командой <strong>/myvpn</strong>'},
+    {t:'Добавьте профиль',d:'В Hiddify → <strong>Add Profile</strong> → вставьте ключ → <strong>Save</strong>'},
+    {t:'Включите VPN',d:'Нажмите <strong>Connect</strong> — соединение установлено 🎉'},
+  ]},
+  mac:{title:'🍎 macOS',steps:[
+    {t:'Установите FoXray',d:'Скачайте <strong>FoXray</strong> из Mac App Store — бесплатно'},
+    {t:'Скопируйте ключ',d:'Получите ключ у бота командой <strong>/myvpn</strong>'},
+    {t:'Добавьте сервер',d:'FoXray → нажмите <strong>+</strong> → <strong>Вставить из буфера</strong>'},
+    {t:'Включите VPN',d:'Переключите тумблер — готово 🎉'},
+  ]},
+};
+function showGuide(platform){
+  document.querySelectorAll('.platform-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('plat-'+platform).classList.add('selected');
+  const g=GUIDES[platform];
+  document.getElementById('guideTitle').textContent=g.title;
+  document.getElementById('guideSteps').innerHTML=g.steps.map((s,i)=>
+    '<div class="guide-step"><div class="guide-step-num">'+(i+1)+'</div><div class="guide-step-text"><strong>'+s.t+'</strong><br>'+s.d+'</div></div>'
+  ).join('');
+  const panel=document.getElementById('guidePanel');
+  panel.classList.add('active');
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
 </script>
 </body>
 </html>
