@@ -886,41 +886,28 @@ const APPS = {
     { id:'happ', name:'Happ', install:[
       { label:'🇷🇺 App Store RU', cls:'sbtn-cyan', url:'https://apps.apple.com/ru/app/happ-proxy-utility/id6504287215' },
       { label:'🌐 App Store', cls:'sbtn-ghost', url:'https://apps.apple.com/app/happ-proxy-utility/id6504287215' }
-    ]},
-    { id:'shadowrocket', name:'Shadowrocket', install:[
-      { label:'🌐 App Store', cls:'sbtn-cyan', url:'https://apps.apple.com/us/app/shadowrocket/id932747118' }
-    ], warn:'Shadowrocket — платное приложение ($2.99). Требует иностранный Apple ID.' }
+    ]}
   ],
   android: [
     { id:'happ', name:'Happ', install:[
       { label:'▶️ Google Play', cls:'sbtn-cyan', url:'https://play.google.com/store/apps/details?id=com.happproxy' },
       { label:'📦 APK', cls:'sbtn-green', url:'https://apkpure.com/happ-proxy-utility/com.happproxy' }
-    ]},
-    { id:'v2raytun', name:'V2RayTun', install:[
-      { label:'▶️ Google Play', cls:'sbtn-cyan', url:'https://play.google.com/store/apps/details?id=com.v2ray.ang' },
-      { label:'📦 APK', cls:'sbtn-green', url:'https://github.com/2dust/v2rayNG/releases/latest' }
     ]}
   ],
   windows: [
     { id:'happ', name:'Happ', install:[
       { label:'🪟 Microsoft Store', cls:'sbtn-cyan', url:'https://www.microsoft.com/store/apps/9N6TP0WXS05R' }
-    ]},
-    { id:'nekobox', name:'NekoBox', install:[
-      { label:'⬇️ GitHub', cls:'sbtn-green', url:'https://github.com/MatsuriDayo/nekoray/releases/latest' }
     ]}
   ],
   macos: [
     { id:'happ', name:'Happ', install:[
       { label:'🇷🇺 App Store RU', cls:'sbtn-cyan', url:'https://apps.apple.com/ru/app/happ-proxy-utility/id6504287215' },
       { label:'🌐 App Store', cls:'sbtn-ghost', url:'https://apps.apple.com/app/happ-proxy-utility/id6504287215' }
-    ]},
-    { id:'flclashx', name:'FlClashX', install:[
-      { label:'⬇️ GitHub', cls:'sbtn-green', url:'https://github.com/chen08209/FlClash/releases/latest' }
     ]}
   ],
   linux: [
-    { id:'nekoray', name:'NekoRay', install:[
-      { label:'⬇️ .deb / .rpm', cls:'sbtn-green', url:'https://github.com/MatsuriDayo/nekoray/releases/latest' }
+    { id:'happ', name:'Happ', install:[
+      { label:'📦 APK (x86_64)', cls:'sbtn-cyan', url:'https://apkpure.com/happ-proxy-utility/com.happproxy' }
     ]}
   ],
   androidtv: [
@@ -937,20 +924,10 @@ const APPS = {
 };
 
 const ADD_INSTR = {
-  happ: 'Нажмите кнопку ниже — Happ откроется и ключ добавится автоматически.',
-  shadowrocket: 'Скопируйте ключ, в Shadowrocket нажмите «+» → «Type» → вставьте ключ.',
-  v2raytun: 'Скопируйте ключ, откройте V2RayTun → «+» → «Import from clipboard».',
-  nekobox: 'Скопируйте ключ. В NekoBox: «Добавить профиль из буфера обмена».',
-  nekoray: 'Скопируйте ключ. В NekoRay: «Добавить профиль из буфера обмена».',
-  flclashx: 'Скопируйте ключ. В FlClashX: Profiles → «+» → Импорт.'
+  happ: 'Нажмите кнопку ниже — Happ откроется и ключ добавится автоматически.'
 };
 const CONNECT_INSTR = {
-  happ: 'В Happ нажмите на добавленный сервер — VPN включится. Готово! 🎉',
-  shadowrocket: 'В Shadowrocket нажмите переключатель вверху для подключения.',
-  v2raytun: 'В V2RayTun выберите сервер и нажмите кнопку подключения.',
-  nekobox: 'В NekoBox выберите профиль и нажмите «Старт».',
-  nekoray: 'В NekoRay выберите профиль → «Запустить».',
-  flclashx: 'В FlClashX выберите профиль и нажмите «Enable».'
+  happ: 'В Happ нажмите на добавленный сервер — VPN включится. Готово! 🎉'
 };
 
 let currentPlatform = 'ios';
@@ -1020,11 +997,9 @@ function renderSteps() {
         <div class="step-icon-wrap card-icon-blue">🔑</div>
         <div class="step-content">
           <div class="step-title">Получите ваш VPN-ключ</div>
-          <div class="step-desc">Нажмите кнопку чтобы получить ключ, затем скопируйте его.</div>
-          <div id="keyBox" class="key-box empty">Нажмите кнопку ниже для получения ключа</div>
-          <div class="step-btns">
-            <button class="sbtn sbtn-cyan" onclick="getMyKey()" style="flex:1;justify-content:center">🔑 Получить мой ключ</button>
-            <button class="sbtn sbtn-ghost" id="copyKeyBtn" onclick="copyKey()" style="display:none">📋 Копировать</button>
+          <div class="step-desc">Ключ доступен после покупки подписки. Перейдите в раздел <strong>Профиль → Мой VPN-ключ</strong>.</div>
+          <div class="step-btns" style="margin-top:8px">
+            <button class="sbtn sbtn-cyan" onclick="switchPage('payment')" style="flex:1;justify-content:center">💳 Купить подписку</button>
           </div>
         </div>
       </div>
